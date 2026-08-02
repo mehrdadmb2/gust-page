@@ -5,6 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>VakilStay | اقامتگاه وکیل</title>
   
+  <!-- ===== Favicon (لوگو در تب مرورگر) ===== -->
+  <link rel="icon" type="image/png" href="guest-page/Pic/Logo.png" />
+  <link rel="apple-touch-icon" href="guest-page/Pic/Logo.png" />
+  
   <!-- Bootstrap 5 -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" />
   <!-- Font Awesome -->
@@ -18,15 +22,18 @@
 </head>
 <body>
 
-  <!-- ===== کانتینر Three.js (پس‌زمینه سه‌بعدی) ===== -->
-  <div id="three-container"></div>
+  <!-- ===== پس‌زمینه اسلایدر ===== -->
+  <!-- (همان کد قبلی) ... -->
 
-  <!-- ===== هدر با ناوبری و دکمه زبان ===== -->
+  <!-- ===== هدر با لوگو ===== -->
   <header class="main-header glass">
     <div class="container">
       <nav class="navbar navbar-expand-lg">
         <a class="navbar-brand" href="#">
-          <i class="fas fa-hotel"></i> VakilStay
+          <!-- لوگو -->
+          <img src="guest-page/Pic/Logo.png" alt="VakilStay Logo" height="45" class="logo-img" />
+          <!-- اگر لوگو وجود نداشته باشد، متن نمایش داده می‌شود -->
+          <span class="brand-text">VakilStay</span>
         </a>
         <button class="navbar-toggler" type="button" id="navToggle">
           <span class="navbar-toggler-icon"></span>
@@ -47,7 +54,7 @@
     </div>
   </header>
 
-  <!-- ===== بخش Hero (با Glassmorphism) ===== -->
+  <!-- ===== Hero ===== -->
   <section class="hero glass">
     <div class="container hero-content">
       <h1 class="display-3 fw-bold" data-fa="اقامتگاه وکیل" data-en="VakilStay Residence">اقامتگاه وکیل</h1>
@@ -56,7 +63,7 @@
     </div>
   </section>
 
-  <!-- ===== بخش درباره (Glass) ===== -->
+  <!-- ===== درباره ===== -->
   <section class="about section-padding" id="about">
     <div class="container">
       <div class="row align-items-center">
@@ -73,13 +80,13 @@
     </div>
   </section>
 
-  <!-- ===== بخش واحدها (اسلایدر با Glass) ===== -->
+  <!-- ===== واحدها ===== -->
   <section class="rooms section-padding" id="rooms">
     <div class="container">
       <h2 class="text-center mb-5" data-fa="🛏 واحدهای اقامتگاه" data-en="🛏 Our Rooms">🛏 واحدهای اقامتگاه</h2>
       <div class="rooms-slider-wrapper">
         <div class="rooms-slider" id="roomsSlider">
-          <!-- کارت‌ها مشابه قبل اما با کلاس glass-card -->
+          <!-- کارت ۱ -->
           <div class="room-card glass-card">
             <img src="https://images.unsplash.com/photo-1566665797739-1674de7a421a?w=400" alt="واحد ۱" />
             <div class="room-info">
@@ -93,7 +100,48 @@
               <a href="https://www.jajiga.com/r/3hwx/dr" target="_blank" class="btn btn-room">رزرو در جاجیگا</a>
             </div>
           </div>
-          <!-- سایر واحدها به همین ترتیب ... (برای اختصار فقط یک نمونه) -->
+          <!-- کارت ۲ -->
+          <div class="room-card glass-card">
+            <img src="https://images.unsplash.com/photo-1590490360182-c33d57733427?w=400" alt="واحد ۲" />
+            <div class="room-info">
+              <h4 data-fa="واحد ۲ (۳ تخته)" data-en="Room 2 (3 beds)">واحد ۲</h4>
+              <p data-fa="آرام و نزدیک به جاذبه‌ها" data-en="Quiet, near attractions">آرام و نزدیک به جاذبه‌ها</p>
+              <ul class="facilities">
+                <li><i class="fas fa-bed"></i> <span data-fa="یک تخت دبل + دو تخت تکی" data-en="1 double + 2 single">یک تخت دبل + دو تخت تکی</span></li>
+                <li><i class="fas fa-wind"></i> <span data-fa="کولر آبی" data-en="Evaporative cooler">کولر آبی</span></li>
+                <li><i class="fas fa-balcony"></i> <span data-fa="بالکن" data-en="Balcony">بالکن</span></li>
+              </ul>
+              <a href="https://www.jajiga.com/r/3i6c/dr" target="_blank" class="btn btn-room">رزرو در جاجیگا</a>
+            </div>
+          </div>
+          <!-- کارت ۳ -->
+          <div class="room-card glass-card">
+            <img src="https://images.unsplash.com/photo-1578683010236-d716f9a3f461?w=400" alt="واحد ۳" />
+            <div class="room-info">
+              <h4 data-fa="واحد ۳ (۲ تخته)" data-en="Room 3 (2 beds)">واحد ۳</h4>
+              <p data-fa="مناسب سفرهای دوستانه" data-en="Great for friends">مناسب سفرهای دوستانه</p>
+              <ul class="facilities">
+                <li><i class="fas fa-bed"></i> <span data-fa="یک تخت دبل + یک تخت تکی" data-en="1 double + 1 single">یک تخت دبل + یک تخت تکی</span></li>
+                <li><i class="fas fa-snowflake"></i> <span data-fa="اسپیلت" data-en="Split AC">اسپیلت</span></li>
+                <li><i class="fas fa-mug-hot"></i> <span data-fa="کتری برقی" data-en="Electric kettle">کتری برقی</span></li>
+              </ul>
+              <a href="https://www.jajiga.com/r/3hqd/dr" target="_blank" class="btn btn-room">رزرو در جاجیگا</a>
+            </div>
+          </div>
+          <!-- کارت ۴ -->
+          <div class="room-card glass-card">
+            <img src="https://images.unsplash.com/photo-1560185127-6ed189bf02f4?w=400" alt="واحد ۴" />
+            <div class="room-info">
+              <h4 data-fa="واحد ۴ (دبل)" data-en="Room 4 (Double)">واحد ۴</h4>
+              <p data-fa="نزدیک بازار وکیل" data-en="Near Vakil Bazaar">نزدیک بازار وکیل</p>
+              <ul class="facilities">
+                <li><i class="fas fa-bed"></i> <span data-fa="یک تخت دبل" data-en="1 double bed">یک تخت دبل</span></li>
+                <li><i class="fas fa-snowflake"></i> <span data-fa="اسپیلت" data-en="Split AC">اسپیلت</span></li>
+                <li><i class="fas fa-utensils"></i> <span data-fa="یخچال، کابینت" data-en="Fridge, cabinet">یخچال، کابینت</span></li>
+              </ul>
+              <a href="https://www.jajiga.com/r/3hwz/dr" target="_blank" class="btn btn-room">رزرو در جاجیگا</a>
+            </div>
+          </div>
         </div>
         <button class="slider-btn prev-btn" id="prevBtn"><i class="fas fa-chevron-right"></i></button>
         <button class="slider-btn next-btn" id="nextBtn"><i class="fas fa-chevron-left"></i></button>
@@ -101,12 +149,11 @@
     </div>
   </section>
 
-  <!-- ===== بخش جاذبه‌های فرهنگی و تاریخی ===== -->
+  <!-- ===== جاذبه‌ها ===== -->
   <section class="attractions section-padding" id="attractions">
     <div class="container">
       <h2 class="text-center mb-5" data-fa="🏛 گنجینه‌های شیراز" data-en="🏛 Shiraz Treasures">🏛 گنجینه‌های شیراز</h2>
       <div class="row g-4">
-        <!-- تخت جمشید -->
         <div class="col-md-3 col-sm-6">
           <div class="attr-card glass-card">
             <i class="fas fa-landmark fa-3x" style="color:#c9a96e;"></i>
@@ -115,7 +162,6 @@
             <a href="https://www.google.com/maps?q=29.9352,52.8896" target="_blank" class="btn btn-sm btn-map">📍 مسیریابی</a>
           </div>
         </div>
-        <!-- پاسارگاد -->
         <div class="col-md-3 col-sm-6">
           <div class="attr-card glass-card">
             <i class="fas fa-monument fa-3x" style="color:#b87333;"></i>
@@ -124,7 +170,6 @@
             <a href="https://www.google.com/maps?q=30.1939,53.1672" target="_blank" class="btn btn-sm btn-map">📍 مسیریابی</a>
           </div>
         </div>
-        <!-- حافظیه -->
         <div class="col-md-3 col-sm-6">
           <div class="attr-card glass-card">
             <i class="fas fa-feather-alt fa-3x" style="color:#5d4037;"></i>
@@ -133,7 +178,6 @@
             <a href="https://www.google.com/maps?q=29.6253,52.5579" target="_blank" class="btn btn-sm btn-map">📍 مسیریابی</a>
           </div>
         </div>
-        <!-- سعدیه -->
         <div class="col-md-3 col-sm-6">
           <div class="attr-card glass-card">
             <i class="fas fa-book-open fa-3x" style="color:#6d4c41;"></i>
@@ -142,7 +186,6 @@
             <a href="https://www.google.com/maps?q=29.6219,52.5819" target="_blank" class="btn btn-sm btn-map">📍 مسیریابی</a>
           </div>
         </div>
-        <!-- باغ ارم -->
         <div class="col-md-3 col-sm-6">
           <div class="attr-card glass-card">
             <i class="fas fa-tree fa-3x" style="color:#2e7d32;"></i>
@@ -151,7 +194,6 @@
             <a href="https://www.google.com/maps?q=29.6368,52.5256" target="_blank" class="btn btn-sm btn-map">📍 مسیریابی</a>
           </div>
         </div>
-        <!-- باغ عفیف‌آباد -->
         <div class="col-md-3 col-sm-6">
           <div class="attr-card glass-card">
             <i class="fas fa-leaf fa-3x" style="color:#388e3c;"></i>
@@ -160,7 +202,6 @@
             <a href="https://www.google.com/maps?q=29.6236,52.4993" target="_blank" class="btn btn-sm btn-map">📍 مسیریابی</a>
           </div>
         </div>
-        <!-- بازار وکیل -->
         <div class="col-md-3 col-sm-6">
           <div class="attr-card glass-card">
             <i class="fas fa-shopping-bag fa-3x" style="color:#b8860b;"></i>
@@ -169,7 +210,6 @@
             <a href="https://www.google.com/maps?q=29.615,52.5468" target="_blank" class="btn btn-sm btn-map">📍 مسیریابی</a>
           </div>
         </div>
-        <!-- ارگ کریم‌خان -->
         <div class="col-md-3 col-sm-6">
           <div class="attr-card glass-card">
             <i class="fas fa-fort-awesome fa-3x" style="color:#8d6e63;"></i>
@@ -178,7 +218,6 @@
             <a href="https://www.google.com/maps?q=29.6176,52.5447" target="_blank" class="btn btn-sm btn-map">📍 مسیریابی</a>
           </div>
         </div>
-        <!-- مسجد وکیل -->
         <div class="col-md-3 col-sm-6">
           <div class="attr-card glass-card">
             <i class="fas fa-mosque fa-3x" style="color:#4e342e;"></i>
@@ -191,7 +230,7 @@
     </div>
   </section>
 
-  <!-- ===== بخش نقشه و اطلاعات ضروری ===== -->
+  <!-- ===== نقشه و اطلاعات ضروری ===== -->
   <section class="map-info section-padding" id="map">
     <div class="container">
       <h2 class="text-center mb-5" data-fa="🗺️ نقشه و اطلاعات ضروری" data-en="🗺️ Map & Essential Info">🗺️ نقشه و اطلاعات ضروری</h2>
@@ -212,7 +251,7 @@
     </div>
   </section>
 
-  <!-- ===== بخش نظرات (Glass) ===== -->
+  <!-- ===== نظرات ===== -->
   <section class="testimonials section-padding" id="testimonials">
     <div class="container">
       <h2 class="text-center mb-5" data-fa="💬 نظرات مهمانان" data-en="💬 Guest Testimonials">💬 نظرات مهمانان</h2>
@@ -224,7 +263,7 @@
     </div>
   </section>
 
-  <!-- ===== بخش تماس (Glass) ===== -->
+  <!-- ===== تماس ===== -->
   <section class="contact section-padding" id="contact">
     <div class="container">
       <h2 class="text-center mb-5" data-fa="📞 تماس با ما" data-en="📞 Contact Us">📞 تماس با ما</h2>
@@ -266,8 +305,6 @@
     </div>
   </footer>
 
-  <!-- ===== اسکریپت‌ها ===== -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
   <script src="script.js"></script>
 </body>

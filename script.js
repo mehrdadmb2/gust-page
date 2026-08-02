@@ -1,15 +1,6 @@
 // ============================================================
-// 1. اسلایدر پس‌زمینه
+// 1. اسلایدر پس‌زمینه (حذف شد چون الگوی ثابت داریم)
 // ============================================================
-let slideIndex = 0;
-const slides = document.querySelectorAll('.background-slider .slide');
-if (slides.length) {
-  setInterval(() => {
-    slides.forEach(s => s.classList.remove('active'));
-    slideIndex = (slideIndex + 1) % slides.length;
-    slides[slideIndex].classList.add('active');
-  }, 5000);
-}
 
 // ============================================================
 // 2. مدیریت تغییر زبان
@@ -29,12 +20,14 @@ function switchLanguage(lang) {
     if (text) el.textContent = text;
   });
 }
-langToggle.addEventListener('click', () => {
-  switchLanguage(currentLang === 'fa' ? 'en' : 'fa');
-});
+if (langToggle) {
+  langToggle.addEventListener('click', () => {
+    switchLanguage(currentLang === 'fa' ? 'en' : 'fa');
+  });
+}
 
 // ============================================================
-// 3. اسلایدر واحدها (با دکمه‌ها)
+// 3. اسلایدر واحدها
 // ============================================================
 const slider = document.getElementById('roomsSlider');
 const prevBtn = document.getElementById('prevBtn');
@@ -52,7 +45,7 @@ if (slider && prevBtn && nextBtn) {
 }
 
 // ============================================================
-// 4. منوی همبرگر (رفع باگ)
+// 4. منوی همبرگر
 // ============================================================
 const navToggle = document.getElementById('navToggle');
 const navCollapse = document.getElementById('navbarNav');
@@ -81,7 +74,7 @@ document.querySelectorAll('.glass-card, .attr-card, .testimonial-card').forEach(
 });
 
 // ============================================================
-// 6. فرم تماس (با پیام موفقیت)
+// 6. فرم تماس
 // ============================================================
 const contactForm = document.getElementById('contactForm');
 if (contactForm) {

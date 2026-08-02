@@ -4,16 +4,16 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>VakilStay | اقامتگاه وکیل</title>
-  
-  <!-- ===== Favicon (لوگو در تب مرورگر) ===== -->
-  <link rel="icon" type="image/png" href="guest-page/Pic/Logo.png" />
-  <link rel="apple-touch-icon" href="guest-page/Pic/Logo.png" />
-  
+
+  <!-- Favicon (لوگو در تب مرورگر) -->
+  <link rel="icon" type="image/png" href="Logo.png" />
+  <link rel="apple-touch-icon" href="Logo.png" />
+
   <!-- Bootstrap 5 -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" />
-  <!-- Font Awesome -->
+  <!-- Font Awesome 6 -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
-  <!-- Vazirmatn Font -->
+  <!-- فونت وزیرمتن -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
@@ -22,17 +22,15 @@
 </head>
 <body>
 
-  <!-- ===== پس‌زمینه اسلایدر ===== -->
-  <!-- (همان کد قبلی) ... -->
+  <!-- ===== الگوی پس‌زمینه (کاشی اسلیمی) ===== -->
+  <div class="pattern-bg"></div>
 
   <!-- ===== هدر با لوگو ===== -->
   <header class="main-header glass">
     <div class="container">
       <nav class="navbar navbar-expand-lg">
         <a class="navbar-brand" href="#">
-          <!-- لوگو -->
-          <img src="guest-page/Pic/Logo.png" alt="VakilStay Logo" height="45" class="logo-img" />
-          <!-- اگر لوگو وجود نداشته باشد، متن نمایش داده می‌شود -->
+          <img src="Logo.png" alt="VakilStay Logo" height="45" class="logo-img" />
           <span class="brand-text">VakilStay</span>
         </a>
         <button class="navbar-toggler" type="button" id="navToggle">
@@ -54,8 +52,9 @@
     </div>
   </header>
 
-  <!-- ===== Hero ===== -->
-  <section class="hero glass">
+  <!-- ===== Hero با گرادینت و جلوه نور ===== -->
+  <section class="hero glass" id="home">
+    <div class="hero-glow"></div>
     <div class="container hero-content">
       <h1 class="display-3 fw-bold" data-fa="اقامتگاه وکیل" data-en="VakilStay Residence">اقامتگاه وکیل</h1>
       <p class="lead" data-fa="در قلب تاریخ و فرهنگ شیراز" data-en="In the heart of Shiraz's history and culture">در قلب تاریخ و فرهنگ شیراز</p>
@@ -63,7 +62,7 @@
     </div>
   </section>
 
-  <!-- ===== درباره ===== -->
+  <!-- ===== بخش درباره ===== -->
   <section class="about section-padding" id="about">
     <div class="container">
       <div class="row align-items-center">
@@ -80,7 +79,7 @@
     </div>
   </section>
 
-  <!-- ===== واحدها ===== -->
+  <!-- ===== واحدها (اسلایدر) ===== -->
   <section class="rooms section-padding" id="rooms">
     <div class="container">
       <h2 class="text-center mb-5" data-fa="🛏 واحدهای اقامتگاه" data-en="🛏 Our Rooms">🛏 واحدهای اقامتگاه</h2>
@@ -149,14 +148,14 @@
     </div>
   </section>
 
-  <!-- ===== جاذبه‌ها ===== -->
+  <!-- ===== جاذبه‌ها (با آیکون‌های رنگی) ===== -->
   <section class="attractions section-padding" id="attractions">
     <div class="container">
       <h2 class="text-center mb-5" data-fa="🏛 گنجینه‌های شیراز" data-en="🏛 Shiraz Treasures">🏛 گنجینه‌های شیراز</h2>
       <div class="row g-4">
         <div class="col-md-3 col-sm-6">
           <div class="attr-card glass-card">
-            <i class="fas fa-landmark fa-3x" style="color:#c9a96e;"></i>
+            <i class="fas fa-landmark fa-3x" style="color: #d4a373;"></i>
             <h5 data-fa="تخت جمشید" data-en="Persepolis">تخت جمشید</h5>
             <p data-fa="فاصله: ۶۰ کیلومتر" data-en="Distance: 60 km">فاصله: ۶۰ کیلومتر</p>
             <a href="https://www.google.com/maps?q=29.9352,52.8896" target="_blank" class="btn btn-sm btn-map">📍 مسیریابی</a>
@@ -164,7 +163,7 @@
         </div>
         <div class="col-md-3 col-sm-6">
           <div class="attr-card glass-card">
-            <i class="fas fa-monument fa-3x" style="color:#b87333;"></i>
+            <i class="fas fa-monument fa-3x" style="color: #b87333;"></i>
             <h5 data-fa="پاسارگاد" data-en="Pasargadae">پاسارگاد</h5>
             <p data-fa="فاصله: ۱۳۰ کیلومتر" data-en="Distance: 130 km">فاصله: ۱۳۰ کیلومتر</p>
             <a href="https://www.google.com/maps?q=30.1939,53.1672" target="_blank" class="btn btn-sm btn-map">📍 مسیریابی</a>
@@ -172,7 +171,7 @@
         </div>
         <div class="col-md-3 col-sm-6">
           <div class="attr-card glass-card">
-            <i class="fas fa-feather-alt fa-3x" style="color:#5d4037;"></i>
+            <i class="fas fa-feather-alt fa-3x" style="color: #5d4037;"></i>
             <h5 data-fa="حافظیه" data-en="Hafezieh">حافظیه</h5>
             <p data-fa="فاصله: ۳ کیلومتر" data-en="Distance: 3 km">فاصله: ۳ کیلومتر</p>
             <a href="https://www.google.com/maps?q=29.6253,52.5579" target="_blank" class="btn btn-sm btn-map">📍 مسیریابی</a>
@@ -180,7 +179,7 @@
         </div>
         <div class="col-md-3 col-sm-6">
           <div class="attr-card glass-card">
-            <i class="fas fa-book-open fa-3x" style="color:#6d4c41;"></i>
+            <i class="fas fa-book-open fa-3x" style="color: #6d4c41;"></i>
             <h5 data-fa="سعدیه" data-en="Saadieh">سعدیه</h5>
             <p data-fa="فاصله: ۴ کیلومتر" data-en="Distance: 4 km">فاصله: ۴ کیلومتر</p>
             <a href="https://www.google.com/maps?q=29.6219,52.5819" target="_blank" class="btn btn-sm btn-map">📍 مسیریابی</a>
@@ -188,7 +187,7 @@
         </div>
         <div class="col-md-3 col-sm-6">
           <div class="attr-card glass-card">
-            <i class="fas fa-tree fa-3x" style="color:#2e7d32;"></i>
+            <i class="fas fa-tree fa-3x" style="color: #2e7d32;"></i>
             <h5 data-fa="باغ ارم" data-en="Eram Garden">باغ ارم</h5>
             <p data-fa="فاصله: ۵ کیلومتر" data-en="Distance: 5 km">فاصله: ۵ کیلومتر</p>
             <a href="https://www.google.com/maps?q=29.6368,52.5256" target="_blank" class="btn btn-sm btn-map">📍 مسیریابی</a>
@@ -196,7 +195,7 @@
         </div>
         <div class="col-md-3 col-sm-6">
           <div class="attr-card glass-card">
-            <i class="fas fa-leaf fa-3x" style="color:#388e3c;"></i>
+            <i class="fas fa-leaf fa-3x" style="color: #388e3c;"></i>
             <h5 data-fa="باغ عفیف‌آباد" data-en="Afifabad Garden">باغ عفیف‌آباد</h5>
             <p data-fa="فاصله: ۷ کیلومتر" data-en="Distance: 7 km">فاصله: ۷ کیلومتر</p>
             <a href="https://www.google.com/maps?q=29.6236,52.4993" target="_blank" class="btn btn-sm btn-map">📍 مسیریابی</a>
@@ -204,7 +203,7 @@
         </div>
         <div class="col-md-3 col-sm-6">
           <div class="attr-card glass-card">
-            <i class="fas fa-shopping-bag fa-3x" style="color:#b8860b;"></i>
+            <i class="fas fa-shopping-bag fa-3x" style="color: #b8860b;"></i>
             <h5 data-fa="بازار وکیل" data-en="Vakil Bazaar">بازار وکیل</h5>
             <p data-fa="فاصله: ۲۰۰ متر" data-en="Distance: 200 m">فاصله: ۲۰۰ متر</p>
             <a href="https://www.google.com/maps?q=29.615,52.5468" target="_blank" class="btn btn-sm btn-map">📍 مسیریابی</a>
@@ -212,7 +211,7 @@
         </div>
         <div class="col-md-3 col-sm-6">
           <div class="attr-card glass-card">
-            <i class="fas fa-fort-awesome fa-3x" style="color:#8d6e63;"></i>
+            <i class="fas fa-fort-awesome fa-3x" style="color: #8d6e63;"></i>
             <h5 data-fa="ارگ کریم‌خان" data-en="Karim Khan Citadel">ارگ کریم‌خان</h5>
             <p data-fa="فاصله: ۵۰۰ متر" data-en="Distance: 500 m">فاصله: ۵۰۰ متر</p>
             <a href="https://www.google.com/maps?q=29.6176,52.5447" target="_blank" class="btn btn-sm btn-map">📍 مسیریابی</a>
@@ -220,7 +219,7 @@
         </div>
         <div class="col-md-3 col-sm-6">
           <div class="attr-card glass-card">
-            <i class="fas fa-mosque fa-3x" style="color:#4e342e;"></i>
+            <i class="fas fa-mosque fa-3x" style="color: #4e342e;"></i>
             <h5 data-fa="مسجد وکیل" data-en="Vakil Mosque">مسجد وکیل</h5>
             <p data-fa="فاصله: ۳۰۰ متر" data-en="Distance: 300 m">فاصله: ۳۰۰ متر</p>
             <a href="https://www.google.com/maps?q=29.6144,52.5454" target="_blank" class="btn btn-sm btn-map">📍 مسیریابی</a>
@@ -236,13 +235,13 @@
       <h2 class="text-center mb-5" data-fa="🗺️ نقشه و اطلاعات ضروری" data-en="🗺️ Map & Essential Info">🗺️ نقشه و اطلاعات ضروری</h2>
       <div class="row g-4">
         <div class="col-md-6 glass-card">
-          <h5><i class="fas fa-subway" style="color:#c9a96e;"></i> <span data-fa="نزدیک‌ترین ایستگاه مترو" data-en="Nearest Metro Station">نزدیک‌ترین ایستگاه مترو</span></h5>
+          <h5><i class="fas fa-subway" style="color: #c9a96e;"></i> <span data-fa="نزدیک‌ترین ایستگاه مترو" data-en="Nearest Metro Station">نزدیک‌ترین ایستگاه مترو</span></h5>
           <p><strong data-fa="ایستگاه وکیل" data-en="Vakil Station">ایستگاه وکیل</strong></p>
           <p data-fa="فاصله: ۲ دقیقه پیاده" data-en="Distance: 2 min walk">فاصله: ۲ دقیقه پیاده</p>
           <a href="https://www.google.com/maps?q=29.6127,52.5516" target="_blank" class="btn btn-sm btn-map">📍 مسیریابی</a>
         </div>
         <div class="col-md-6 glass-card">
-          <h5><i class="fas fa-hospital" style="color:#c62828;"></i> <span data-fa="نزدیک‌ترین بیمارستان" data-en="Nearest Hospital">نزدیک‌ترین بیمارستان</span></h5>
+          <h5><i class="fas fa-hospital" style="color: #c62828;"></i> <span data-fa="نزدیک‌ترین بیمارستان" data-en="Nearest Hospital">نزدیک‌ترین بیمارستان</span></h5>
           <p><strong data-fa="بیمارستان شهید بهشتی" data-en="Shahid Beheshti Hospital">بیمارستان شهید بهشتی</strong></p>
           <p data-fa="فاصله: ۳ کیلومتر" data-en="Distance: 3 km">فاصله: ۳ کیلومتر</p>
           <a href="https://www.google.com/maps?q=29.6109,52.5554" target="_blank" class="btn btn-sm btn-map">📍 مسیریابی</a>
@@ -256,9 +255,24 @@
     <div class="container">
       <h2 class="text-center mb-5" data-fa="💬 نظرات مهمانان" data-en="💬 Guest Testimonials">💬 نظرات مهمانان</h2>
       <div class="row g-4">
-        <div class="col-md-4"><div class="testimonial-card glass-card"><p data-fa="'اقامت فوق‌العاده‌ای بود. موقعیت مکانی عالی و صاحبخانه بسیار مهمان‌نواز.'" data-en="'Amazing stay. Great location and very hospitable host.'">'اقامت فوق‌العاده‌ای بود. موقعیت مکانی عالی و صاحبخانه بسیار مهمان‌نواز.'</p><span>- محمد ر.</span></div></div>
-        <div class="col-md-4"><div class="testimonial-card glass-card"><p data-fa="'خانه سنتی و تمیز، نزدیک به همه جا. حتماً دوباره می‌آیم.'" data-en="'Traditional and clean house, close to everything. Will come again.'">'خانه سنتی و تمیز، نزدیک به همه جا. حتماً دوباره می‌آیم.'</p><span>- سارا م.</span></div></div>
-        <div class="col-md-4"><div class="testimonial-card glass-card"><p data-fa="'ارزش هر ریال را داشت. شیراز زیبا و این اقامتگاه تجربه را کامل کرد.'" data-en="'Worth every penny. Shiraz is beautiful and this stay made it perfect.'">'ارزش هر ریال را داشت. شیراز زیبا و این اقامتگاه تجربه را کامل کرد.'</p><span>- علی ک.</span></div></div>
+        <div class="col-md-4">
+          <div class="testimonial-card glass-card">
+            <p data-fa="'اقامت فوق‌العاده‌ای بود. موقعیت مکانی عالی و صاحبخانه بسیار مهمان‌نواز.'" data-en="'Amazing stay. Great location and very hospitable host.'">'اقامت فوق‌العاده‌ای بود. موقعیت مکانی عالی و صاحبخانه بسیار مهمان‌نواز.'</p>
+            <span>- محمد ر.</span>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="testimonial-card glass-card">
+            <p data-fa="'خانه سنتی و تمیز، نزدیک به همه جا. حتماً دوباره می‌آیم.'" data-en="'Traditional and clean house, close to everything. Will come again.'">'خانه سنتی و تمیز، نزدیک به همه جا. حتماً دوباره می‌آیم.'</p>
+            <span>- سارا م.</span>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="testimonial-card glass-card">
+            <p data-fa="'ارزش هر ریال را داشت. شیراز زیبا و این اقامتگاه تجربه را کامل کرد.'" data-en="'Worth every penny. Shiraz is beautiful and this stay made it perfect.'">'ارزش هر ریال را داشت. شیراز زیبا و این اقامتگاه تجربه را کامل کرد.'</p>
+            <span>- علی ک.</span>
+          </div>
+        </div>
       </div>
     </div>
   </section>

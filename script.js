@@ -1,9 +1,13 @@
 // ============================================================
-// 1. مدیریت تغییر زبان (فارسی / انگلیسی)
+// 1. اسلایدر پس‌زمینه (حذف شد چون الگوی ثابت داریم)
+// ============================================================
+
+// ============================================================
+// 2. مدیریت تغییر زبان
 // ============================================================
 const langToggle = document.getElementById('langToggle');
 const langLabel = document.getElementById('langLabel');
-let currentLang = 'fa'; // 'fa' یا 'en'
+let currentLang = 'fa';
 
 function switchLanguage(lang) {
   currentLang = lang;
@@ -11,62 +15,50 @@ function switchLanguage(lang) {
   document.documentElement.dir = lang === 'fa' ? 'rtl' : 'ltr';
   langLabel.textContent = lang === 'fa' ? 'فارسی' : 'English';
 
-  // تغییر تمام المان‌های دارای data-fa و data-en
   document.querySelectorAll('[data-fa][data-en]').forEach(el => {
     const text = lang === 'fa' ? el.getAttribute('data-fa') : el.getAttribute('data-en');
     if (text) el.textContent = text;
   });
-
-  // تغییر placeholder ها (اگر نیاز باشد)
-  document.querySelectorAll('input, textarea').forEach(el => {
-    if (el.hasAttribute('data-fa-placeholder') && el.hasAttribute('data-en-placeholder')) {
-      el.placeholder = lang === 'fa' ? el.getAttribute('data-fa-placeholder') : el.getAttribute('data-en-placeholder');
-    }
+}
+if (langToggle) {
+  langToggle.addEventListener('click', () => {
+    switchLanguage(currentLang === 'fa' ? 'en' : 'fa');
   });
 }
 
-langToggle.addEventListener('click', () => {
-  const nextLang = currentLang === 'fa' ? 'en' : 'fa';
-  switchLanguage(nextLang);
-});
-
 // ============================================================
-// 2. اسلایدر واحدها (با دکمه‌های قبلی/بعدی)
+// 3. اسلایدر واحدها
 // ============================================================
 const slider = document.getElementById('roomsSlider');
 const prevBtn = document.getElementById('prevBtn');
 const nextBtn = document.getElementById('nextBtn');
 
-function slide(direction) {
-  const cardWidth = slider.querySelector('.room-card').offsetWidth + 24; // +gap
-  const scrollAmount = direction === 'next' ? cardWidth : -cardWidth;
-  slider.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+if (slider && prevBtn && nextBtn) {
+  function slide(direction) {
+    const card = slider.querySelector('.room-card');
+    if (!card) return;
+    const cardWidth = card.offsetWidth + 24;
+    slider.scrollBy({ left: direction === 'next' ? cardWidth : -cardWidth, behavior: 'smooth' });
+  }
+  prevBtn.addEventListener('click', () => slide('prev'));
+  nextBtn.addEventListener('click', () => slide('next'));
 }
 
-prevBtn.addEventListener('click', () => slide('prev'));
-nextBtn.addEventListener('click', () => slide('next'));
-
-// پیمایش خودکار (هر ۵ ثانیه)
-let autoSlide = setInterval(() => slide('next'), 5000);
-slider.addEventListener('mouseenter', () => clearInterval(autoSlide));
-slider.addEventListener('mouseleave', () => {
-  autoSlide = setInterval(() => slide('next'), 5000);
-});
-
 // ============================================================
-// 3. منوی همبرگر (موبایل)
+// 4. منوی همبرگر
 // ============================================================
 const navToggle = document.getElementById('navToggle');
 const navCollapse = document.getElementById('navbarNav');
-navToggle.addEventListener('click', () => {
-  navCollapse.classList.toggle('show');
-});
+if (navToggle && navCollapse) {
+  navToggle.addEventListener('click', function(e) {
+    e.preventDefault();
+    navCollapse.classList.toggle('show');
+  });
+}
 
 // ============================================================
-// 4. انیمیشن فید-این هنگام اسکرول
+// 5. انیمیشن فید-این هنگام اسکرول
 // ============================================================
-const fadeElements = document.querySelectorAll('.room-card, .attr-card, .testimonial-card, .gallery-img, .about .col-lg-6');
-
 const observer = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
     if (entry.isIntersecting) {
@@ -76,40 +68,25 @@ const observer = new IntersectionObserver((entries) => {
   });
 }, { threshold: 0.2 });
 
-fadeElements.forEach(el => {
+document.querySelectorAll('.glass-card, .attr-card, .testimonial-card').forEach(el => {
   el.classList.add('fade-in');
   observer.observe(el);
 });
 
 // ============================================================
-// 5. فرم تماس (اعتبارسنجی ساده)
+// 6. فرم تماس
 // ============================================================
-document.getElementById('contactForm').addEventListener('submit', function(e) {
-  e.preventDefault();
-  alert(currentLang === 'fa' ? 'پیام شما با موفقیت ارسال شد!' : 'Your message sent successfully!');
-  this.reset();
-});
-
-// ============================================================
-// 6. (اختیاری) کلیک روی تصاویر گالری برای بزرگ‌نمایی
-// ============================================================
-document.querySelectorAll('.gallery-img').forEach(img => {
-  img.addEventListener('click', function() {
-    const src = this.src;
-    const overlay = document.createElement('div');
-    overlay.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.8);z-index:9999;display:flex;justify-content:center;align-items:center;cursor:pointer;';
-    const bigImg = document.createElement('img');
-    bigImg.src = src;
-    bigImg.style.maxWidth = '90%';
-    bigImg.style.maxHeight = '90%';
-    bigImg.style.borderRadius = '16px';
-    overlay.appendChild(bigImg);
-    overlay.addEventListener('click', () => overlay.remove());
-    document.body.appendChild(overlay);
+const contactForm = document.getElementById('contactForm');
+if (contactForm) {
+  contactForm.addEventListener('submit', function(e) {
+    e.preventDefault();
+    const msg = currentLang === 'fa' ? 'پیام شما با موفقیت ارسال شد!' : 'Your message sent successfully!';
+    alert(msg);
+    this.reset();
   });
-});
+}
 
 // ============================================================
-// 7. مقداردهی اولیه زبان (فارسی)
+// 7. مقداردهی اولیه
 // ============================================================
 switchLanguage('fa');

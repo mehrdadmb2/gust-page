@@ -7,45 +7,64 @@
 
 body {
   font-family: 'Vazirmatn', sans-serif;
-  background: #fcf8f3;
-  color: #3e2c1b;
+  background: #1a1410; /* پس‌زمینه تیره برای نمایش سه‌بعدی */
+  color: #f0ebe4;
   overflow-x: hidden;
+  min-height: 100vh;
 }
 
-/* ===== رنگ‌بندی الهام‌گرفته از کاشی‌های شیراز ===== */
-:root {
-  --gold: #c9a96e;
-  --copper: #b87333;
-  --terracotta: #c47b5a;
-  --dark-brown: #5d4037;
-  --cream: #f7f0e1;
-  --shadow: 0 15px 40px rgba(0,0,0,0.08);
+/* ===== کانتینر Three.js (پس‌زمینه) ===== */
+#three-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none; /* اجازه کلیک روی محتوا */
 }
 
-/* ===== هدر و ناوبری ===== */
+/* ===== Glassmorphism ===== */
+.glass, .glass-card {
+  background: rgba(255, 255, 255, 0.07) !important;
+  backdrop-filter: blur(16px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(16px) saturate(180%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3) !important;
+  border-radius: 24px !important;
+  transition: all 0.3s ease;
+}
+
+.glass-card:hover {
+  background: rgba(255, 255, 255, 0.12) !important;
+  transform: translateY(-4px);
+  box-shadow: 0 12px 48px rgba(0, 0, 0, 0.4) !important;
+}
+
+/* ===== هدر ===== */
 .main-header {
-  background: rgba(255, 252, 247, 0.95);
-  backdrop-filter: blur(8px);
-  box-shadow: 0 4px 30px rgba(0,0,0,0.05);
-  padding: 12px 0;
   position: sticky;
   top: 0;
   z-index: 999;
+  padding: 12px 0;
+  border-radius: 0 0 24px 24px !important;
+  margin-bottom: 20px;
 }
 
 .navbar-brand {
   font-weight: 700;
-  font-size: 1.6rem;
-  color: var(--dark-brown) !important;
+  font-size: 1.8rem;
+  color: #f0ebe4 !important;
+  text-shadow: 0 0 20px rgba(201, 169, 110, 0.3);
 }
 .navbar-brand i {
-  color: var(--gold);
+  color: #c9a96e;
 }
 
 .nav-link {
-  color: var(--dark-brown) !important;
+  color: #f0ebe4 !important;
   font-weight: 500;
-  margin: 0 8px;
+  margin: 0 10px;
   transition: 0.3s;
   position: relative;
 }
@@ -56,7 +75,7 @@ body {
   right: 0;
   width: 0%;
   height: 2px;
-  background: var(--gold);
+  background: #c9a96e;
   transition: 0.3s;
 }
 .nav-link:hover::after {
@@ -64,54 +83,44 @@ body {
 }
 
 .btn-lang {
-  background: var(--gold);
-  color: #fff;
+  background: #c9a96e;
+  color: #1a1410;
   border: none;
   border-radius: 50px;
-  padding: 8px 20px;
+  padding: 8px 22px;
   font-weight: 600;
   transition: 0.3s;
 }
 .btn-lang:hover {
-  background: var(--copper);
+  background: #b87333;
   color: #fff;
-  transform: scale(1.02);
+  transform: scale(1.05);
 }
 
 /* ===== Hero ===== */
 .hero {
-  background: linear-gradient(135deg, #3e2c1b 0%, #7b5d3d 50%, #c9a96e 100%);
-  min-height: 80vh;
+  min-height: 70vh;
   display: flex;
   align-items: center;
-  position: relative;
-  overflow: hidden;
-}
-.hero::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" opacity="0.1"><path d="M20,20 L80,20 L80,80 L20,80 Z" fill="none" stroke="%23fff" stroke-width="2"/><path d="M30,30 L70,30 L70,70 L30,70 Z" fill="none" stroke="%23fff" stroke-width="2"/><circle cx="50" cy="50" r="10" fill="none" stroke="%23fff" stroke-width="2"/></svg>');
-  background-size: 80px 80px;
-}
-.hero-overlay {
-  position: absolute;
-  inset: 0;
-  background: rgba(0,0,0,0.2);
-}
-.hero-content {
-  position: relative;
-  z-index: 2;
-  color: #fff;
+  justify-content: center;
   text-align: center;
+  margin: 20px 20px 40px;
+  padding: 40px;
+  border-radius: 40px !important;
 }
 .hero-content h1 {
-  text-shadow: 0 8px 30px rgba(0,0,0,0.3);
+  text-shadow: 0 8px 30px rgba(0,0,0,0.6);
+  color: #fff;
 }
+.hero-content p {
+  color: #f0ebe4;
+  font-size: 1.4rem;
+}
+
 .btn-hero {
-  background: var(--gold);
-  color: #3e2c1b;
-  padding: 14px 40px;
+  background: #c9a96e;
+  color: #1a1410;
+  padding: 14px 44px;
   border-radius: 50px;
   font-weight: 700;
   transition: 0.3s;
@@ -121,20 +130,23 @@ body {
 .btn-hero:hover {
   background: transparent;
   color: #fff;
-  border-color: var(--gold);
-  transform: translateY(-3px);
+  border-color: #c9a96e;
+  transform: translateY(-4px);
 }
 
 /* ===== بخش‌ها ===== */
 .section-padding {
   padding: 80px 0;
+  position: relative;
+  z-index: 1;
 }
 
 h2 {
   font-weight: 700;
-  color: var(--dark-brown);
+  color: #f0ebe4;
   position: relative;
   display: inline-block;
+  text-shadow: 0 4px 20px rgba(0,0,0,0.5);
 }
 h2::after {
   content: '';
@@ -143,7 +155,7 @@ h2::after {
   right: 0;
   width: 60px;
   height: 4px;
-  background: linear-gradient(to left, var(--gold), var(--copper));
+  background: linear-gradient(to left, #c9a96e, #b87333);
   border-radius: 4px;
 }
 
@@ -165,7 +177,7 @@ h2::after {
   height: 6px;
 }
 .rooms-slider::-webkit-scrollbar-thumb {
-  background: var(--gold);
+  background: #c9a96e;
   border-radius: 50px;
 }
 .rooms-slider::-webkit-scrollbar-track {
@@ -174,27 +186,20 @@ h2::after {
 
 .room-card {
   flex: 0 0 280px;
-  background: #fff;
-  border-radius: 24px;
   overflow: hidden;
-  box-shadow: var(--shadow);
   scroll-snap-align: start;
-  transition: 0.4s;
-}
-.room-card:hover {
-  transform: translateY(-10px) scale(1.02);
-  box-shadow: 0 20px 50px rgba(0,0,0,0.12);
 }
 .room-card img {
   width: 100%;
   height: 200px;
   object-fit: cover;
+  border-radius: 20px 20px 0 0;
 }
 .room-info {
   padding: 20px;
 }
 .room-info h4 {
-  color: var(--dark-brown);
+  color: #f0ebe4;
   font-weight: 700;
 }
 .facilities {
@@ -206,12 +211,12 @@ h2::after {
   margin-bottom: 6px;
 }
 .facilities i {
-  color: var(--gold);
+  color: #c9a96e;
   width: 22px;
 }
 .btn-room {
-  background: var(--copper);
-  color: #fff;
+  background: #c9a96e;
+  color: #1a1410;
   border-radius: 50px;
   padding: 10px 20px;
   font-weight: 600;
@@ -221,7 +226,7 @@ h2::after {
   text-decoration: none;
 }
 .btn-room:hover {
-  background: var(--dark-brown);
+  background: #b87333;
   color: #fff;
   transform: scale(1.05);
 }
@@ -230,73 +235,73 @@ h2::after {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  background: rgba(255,255,255,0.8);
-  border: none;
+  background: rgba(255,255,255,0.15);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255,255,255,0.2);
   border-radius: 50%;
   width: 44px;
   height: 44px;
   font-size: 1.2rem;
-  color: var(--dark-brown);
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  color: #f0ebe4;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
   transition: 0.3s;
   z-index: 5;
 }
 .slider-btn:hover {
-  background: var(--gold);
-  color: #fff;
+  background: #c9a96e;
+  color: #1a1410;
 }
 .prev-btn { right: 0; }
 .next-btn { left: 0; }
 
-/* ===== گالری ===== */
-.gallery-img {
-  transition: 0.4s;
-  cursor: pointer;
-  height: 250px;
-  object-fit: cover;
-}
-.gallery-img:hover {
-  transform: scale(1.03);
-  box-shadow: 0 10px 30px rgba(0,0,0,0.15);
-}
-
 /* ===== جاذبه‌ها ===== */
 .attr-card {
-  background: #fff;
-  padding: 25px 15px;
-  border-radius: 20px;
   text-align: center;
-  box-shadow: var(--shadow);
-  transition: 0.4s;
-  border-bottom: 4px solid transparent;
-}
-.attr-card:hover {
-  transform: translateY(-8px);
-  border-bottom-color: var(--gold);
+  padding: 20px 10px;
+  cursor: pointer;
 }
 .attr-card i {
-  color: var(--gold);
   margin-bottom: 12px;
 }
 .attr-card h5 {
   font-weight: 700;
   margin: 10px 0 5px;
+  color: #f0ebe4;
+}
+.attr-card p {
+  font-size: 0.9rem;
+  color: #d4c9b8;
+}
+
+.btn-map {
+  background: #c9a96e;
+  color: #1a1410;
+  border: none;
+  border-radius: 50px;
+  padding: 6px 16px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  transition: 0.3s;
+  text-decoration: none;
+  display: inline-block;
+}
+.btn-map:hover {
+  background: #b87333;
+  color: #fff;
+  transform: scale(1.05);
 }
 
 /* ===== نظرات ===== */
 .testimonial-card {
-  background: #fff;
   padding: 25px;
-  border-radius: 20px;
-  box-shadow: var(--shadow);
   font-style: italic;
-  border-right: 6px solid var(--gold);
+  border-right: 6px solid #c9a96e;
 }
 .testimonial-card span {
   display: block;
   margin-top: 12px;
   font-weight: 600;
-  color: var(--dark-brown);
+  color: #c9a96e;
 }
 
 /* ===== تماس ===== */
@@ -307,12 +312,12 @@ h2::after {
   margin-bottom: 16px;
 }
 .contact-info i {
-  color: var(--gold);
+  color: #c9a96e;
   width: 30px;
 }
 .btn-submit {
-  background: var(--gold);
-  color: #fff;
+  background: #c9a96e;
+  color: #1a1410;
   padding: 12px 40px;
   border-radius: 50px;
   font-weight: 600;
@@ -320,11 +325,12 @@ h2::after {
   transition: 0.3s;
 }
 .btn-submit:hover {
-  background: var(--copper);
+  background: #b87333;
+  color: #fff;
   transform: scale(1.03);
 }
-.btn-map, .btn-guide {
-  background: var(--dark-brown);
+.btn-guide {
+  background: #b87333;
   color: #fff;
   padding: 10px 25px;
   border-radius: 50px;
@@ -333,24 +339,24 @@ h2::after {
   margin: 5px 0;
   transition: 0.3s;
 }
-.btn-map:hover, .btn-guide:hover {
-  background: var(--copper);
-  color: #fff;
+.btn-guide:hover {
+  background: #c9a96e;
+  color: #1a1410;
 }
 
 /* ===== فوتر ===== */
 .main-footer {
-  background: var(--dark-brown);
-  color: #eee;
-  padding: 40px 0;
+  margin: 40px 20px 20px;
+  padding: 30px;
   text-align: center;
-  margin-top: 40px;
+  border-radius: 30px !important;
 }
 .main-footer p {
   margin: 0;
+  color: #d4c9b8;
 }
 
-/* ===== انیمیشن اسکرول (فید-این) ===== */
+/* ===== انیمیشن فید-این ===== */
 .fade-in {
   opacity: 0;
   transform: translateY(40px);
@@ -363,14 +369,14 @@ h2::after {
 
 /* ===== ریسپانسیو ===== */
 @media (max-width: 768px) {
-  .hero { min-height: 60vh; }
-  .room-card { flex: 0 0 240px; }
+  .hero { min-height: 50vh; padding: 30px; }
+  .room-card { flex: 0 0 220px; }
   .section-padding { padding: 50px 0; }
   .navbar-nav { text-align: center; }
   .btn-lang { margin-top: 10px; }
 }
 @media (max-width: 576px) {
   .hero-content h1 { font-size: 2.2rem; }
-  .room-card { flex: 0 0 200px; }
+  .room-card { flex: 0 0 180px; }
   .slider-btn { width: 34px; height: 34px; font-size: 0.9rem; }
 }

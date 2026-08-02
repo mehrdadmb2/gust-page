@@ -7,38 +7,99 @@
 
 body {
   font-family: 'Vazirmatn', sans-serif;
-  background: #1a1410; /* پس‌زمینه تیره برای نمایش سه‌بعدی */
   color: #f0ebe4;
   overflow-x: hidden;
   min-height: 100vh;
+  background: #1a1410;
 }
 
-/* ===== کانتینر Three.js (پس‌زمینه) ===== */
-#three-container {
+/* ===== پس‌زمینه اسلایدر ===== */
+.background-slider {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  z-index: 0;
-  pointer-events: none; /* اجازه کلیک روی محتوا */
+  z-index: -2;
+  overflow: hidden;
+}
+.background-slider .slide {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  opacity: 0;
+  transition: opacity 1.5s ease-in-out;
+}
+.background-slider .slide.active {
+  opacity: 1;
+}
+.background-slider::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+}
+
+/* ===== المان‌های تزئینی متحرک ===== */
+.decor-shape {
+  position: fixed;
+  z-index: -1;
+  opacity: 0.15;
+  background: radial-gradient(circle, #c9a96e, transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+  animation: floatShape 20s infinite alternate ease-in-out;
+}
+.shape-1 {
+  width: 300px;
+  height: 300px;
+  top: 10%;
+  left: -5%;
+  animation-duration: 25s;
+}
+.shape-2 {
+  width: 400px;
+  height: 400px;
+  bottom: 0;
+  right: -10%;
+  animation-duration: 30s;
+  animation-delay: -5s;
+}
+.shape-3 {
+  width: 200px;
+  height: 200px;
+  top: 50%;
+  left: 40%;
+  animation-duration: 20s;
+  animation-delay: -10s;
+  background: radial-gradient(circle, #b87333, transparent 70%);
+}
+
+@keyframes floatShape {
+  0% { transform: translate(0, 0) scale(1) rotate(0deg); }
+  33% { transform: translate(30px, -50px) scale(1.1) rotate(15deg); }
+  66% { transform: translate(-20px, 40px) scale(0.9) rotate(-10deg); }
+  100% { transform: translate(10px, -20px) scale(1.05) rotate(5deg); }
 }
 
 /* ===== Glassmorphism ===== */
 .glass, .glass-card {
-  background: rgba(255, 255, 255, 0.07) !important;
+  background: rgba(255, 255, 255, 0.08) !important;
   backdrop-filter: blur(16px) saturate(180%) !important;
   -webkit-backdrop-filter: blur(16px) saturate(180%) !important;
-  border: 1px solid rgba(255, 255, 255, 0.15) !important;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3) !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4) !important;
   border-radius: 24px !important;
   transition: all 0.3s ease;
 }
-
 .glass-card:hover {
-  background: rgba(255, 255, 255, 0.12) !important;
-  transform: translateY(-4px);
-  box-shadow: 0 12px 48px rgba(0, 0, 0, 0.4) !important;
+  background: rgba(255, 255, 255, 0.15) !important;
+  transform: translateY(-6px);
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.5) !important;
 }
 
 /* ===== هدر ===== */
@@ -50,7 +111,6 @@ body {
   border-radius: 0 0 24px 24px !important;
   margin-bottom: 20px;
 }
-
 .navbar-brand {
   font-weight: 700;
   font-size: 1.8rem;
@@ -60,20 +120,16 @@ body {
 .navbar-brand i {
   color: #c9a96e;
 }
-
 .nav-link {
   color: #f0ebe4 !important;
   font-weight: 500;
   margin: 0 10px;
   transition: 0.3s;
-  position: relative;
 }
 .nav-link::after {
   content: '';
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  width: 0%;
+  display: block;
+  width: 0;
   height: 2px;
   background: #c9a96e;
   transition: 0.3s;
@@ -81,7 +137,6 @@ body {
 .nav-link:hover::after {
   width: 100%;
 }
-
 .btn-lang {
   background: #c9a96e;
   color: #1a1410;
@@ -113,10 +168,8 @@ body {
   color: #fff;
 }
 .hero-content p {
-  color: #f0ebe4;
   font-size: 1.4rem;
 }
-
 .btn-hero {
   background: #c9a96e;
   color: #1a1410;
@@ -140,7 +193,6 @@ body {
   position: relative;
   z-index: 1;
 }
-
 h2 {
   font-weight: 700;
   color: #f0ebe4;
@@ -183,7 +235,6 @@ h2::after {
 .rooms-slider::-webkit-scrollbar-track {
   background: transparent;
 }
-
 .room-card {
   flex: 0 0 280px;
   overflow: hidden;
@@ -230,7 +281,6 @@ h2::after {
   color: #fff;
   transform: scale(1.05);
 }
-
 .slider-btn {
   position: absolute;
   top: 50%;
@@ -258,7 +308,7 @@ h2::after {
 .attr-card {
   text-align: center;
   padding: 20px 10px;
-  cursor: pointer;
+  cursor: default;
 }
 .attr-card i {
   margin-bottom: 12px;
@@ -272,7 +322,6 @@ h2::after {
   font-size: 0.9rem;
   color: #d4c9b8;
 }
-
 .btn-map {
   background: #c9a96e;
   color: #1a1410;
@@ -374,9 +423,52 @@ h2::after {
   .section-padding { padding: 50px 0; }
   .navbar-nav { text-align: center; }
   .btn-lang { margin-top: 10px; }
+  .decor-shape { display: none; }
 }
 @media (max-width: 576px) {
   .hero-content h1 { font-size: 2.2rem; }
   .room-card { flex: 0 0 180px; }
   .slider-btn { width: 34px; height: 34px; font-size: 0.9rem; }
+}
+
+/* ===== تنظیمات لوگو در هدر ===== */
+.navbar-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 700;
+  font-size: 1.6rem;
+  color: #f0ebe4 !important;
+  text-decoration: none;
+}
+
+.logo-img {
+  height: 45px;
+  width: auto;
+  border-radius: 8px;
+  transition: transform 0.3s ease;
+}
+.logo-img:hover {
+  transform: scale(1.05);
+}
+
+.brand-text {
+  color: #f0ebe4;
+  text-shadow: 0 0 20px rgba(201, 169, 110, 0.3);
+}
+
+/* اگر لوگو لود نشود، نام برند مشخص باشد */
+.navbar-brand img:not([src]) + .brand-text,
+.navbar-brand img[src=""] + .brand-text {
+  display: inline-block;
+}
+
+/* ===== ریسپانسیو برای موبایل ===== */
+@media (max-width: 768px) {
+  .logo-img {
+    height: 35px;
+  }
+  .brand-text {
+    font-size: 1.2rem;
+  }
 }

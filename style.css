@@ -1,20 +1,48 @@
-/* ===== Reset & Base ===== */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+/* ===== متغیرهای CSS (پشتیبانی از تم روشن/تاریک) ===== */
+:root {
+  --bg-primary: #1a1410;
+  --bg-secondary: rgba(26, 20, 16, 0.5);
+  --text-primary: #f0ebe4;
+  --text-muted: #d4c9b8;
+  --glass-bg: rgba(255, 255, 255, 0.06);
+  --glass-border: rgba(201, 169, 110, 0.25);
+  --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+  --gradient-start: #b87333;
+  --gradient-mid: #5d4037;
+  --gradient-end: #1a1410;
+  --card-hover-bg: rgba(255, 255, 255, 0.12);
+  --btn-gradient: linear-gradient(135deg, #c9a96e, #b87333);
+  --btn-hover-shadow: 0 0 30px rgba(201, 169, 110, 0.3);
 }
 
+[data-theme="light"] {
+  --bg-primary: #f5efe8;
+  --bg-secondary: rgba(245, 239, 232, 0.7);
+  --text-primary: #3e2c1b;
+  --text-muted: #6d5d4e;
+  --glass-bg: rgba(255, 255, 255, 0.4);
+  --glass-border: rgba(201, 169, 110, 0.3);
+  --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  --gradient-start: #e8d5b0;
+  --gradient-mid: #d4b896;
+  --gradient-end: #f5efe8;
+  --card-hover-bg: rgba(255, 255, 255, 0.6);
+  --btn-gradient: linear-gradient(135deg, #c9a96e, #b87333);
+  --btn-hover-shadow: 0 0 30px rgba(201, 169, 110, 0.4);
+}
+
+/* ===== اعمال متغیرها ===== */
 body {
   font-family: 'Vazirmatn', sans-serif;
-  color: #f0ebe4;
+  color: var(--text-primary);
+  background: var(--bg-primary);
+  transition: background 0.4s, color 0.4s;
   overflow-x: hidden;
   min-height: 100vh;
-  background: #1a1410;
   position: relative;
 }
 
-/* ===== الگوی پس‌زمینه (کاشی اسلیمی با SVG) ===== */
+/* ===== الگوی پس‌زمینه ===== */
 .pattern-bg {
   position: fixed;
   top: 0;
@@ -41,8 +69,9 @@ body::before {
   width: 200%;
   height: 200%;
   z-index: -2;
-  background: radial-gradient(circle at 30% 40%, #b87333 0%, #5d4037 40%, #1a1410 80%);
+  background: radial-gradient(circle at 30% 40%, var(--gradient-start) 0%, var(--gradient-mid) 40%, var(--gradient-end) 80%);
   animation: gradientShift 20s ease-in-out infinite alternate;
+  transition: background 0.6s;
 }
 
 @keyframes gradientShift {
@@ -51,25 +80,25 @@ body::before {
   100% { transform: translate(-5%, -10%) scale(1.2); }
 }
 
-/* ===== Glassmorphism پیشرفته ===== */
+/* ===== Glassmorphism ===== */
 .glass, .glass-card {
-  background: rgba(255, 255, 255, 0.06) !important;
+  background: var(--glass-bg) !important;
   backdrop-filter: blur(20px) saturate(200%) !important;
   -webkit-backdrop-filter: blur(20px) saturate(200%) !important;
-  border: 1px solid rgba(201, 169, 110, 0.25) !important;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5), 0 0 40px rgba(201, 169, 110, 0.05) !important;
+  border: 1px solid var(--glass-border) !important;
+  box-shadow: var(--glass-shadow), 0 0 40px rgba(201, 169, 110, 0.05) !important;
   border-radius: 24px !important;
   transition: all 0.4s ease;
 }
 
 .glass-card:hover {
-  background: rgba(255, 255, 255, 0.12) !important;
+  background: var(--card-hover-bg) !important;
   transform: translateY(-8px) scale(1.01);
   box-shadow: 0 16px 48px rgba(0, 0, 0, 0.6), 0 0 60px rgba(201, 169, 110, 0.1) !important;
   border-color: rgba(201, 169, 110, 0.5) !important;
 }
 
-/* ===== هدر ===== */
+/* ===== هدر پویا ===== */
 .main-header {
   position: sticky;
   top: 0;
@@ -77,7 +106,15 @@ body::before {
   padding: 12px 0;
   border-radius: 0 0 30px 30px !important;
   margin-bottom: 20px;
-  background: rgba(26, 20, 16, 0.5) !important;
+  background: var(--bg-secondary) !important;
+  transition: background 0.3s, backdrop-filter 0.3s;
+}
+.main-header.scrolled {
+  backdrop-filter: blur(30px) saturate(250%);
+  background: rgba(0, 0, 0, 0.6) !important;
+}
+[data-theme="light"] .main-header.scrolled {
+  background: rgba(255, 255, 255, 0.7) !important;
 }
 
 .navbar-brand {
@@ -99,12 +136,12 @@ body::before {
 .brand-text {
   font-weight: 700;
   font-size: 1.6rem;
-  color: #f0ebe4;
+  color: var(--text-primary);
   text-shadow: 0 0 30px rgba(201, 169, 110, 0.2);
 }
 
 .nav-link {
-  color: #f0ebe4 !important;
+  color: var(--text-primary) !important;
   font-weight: 500;
   margin: 0 12px;
   transition: 0.3s;
@@ -124,18 +161,23 @@ body::before {
   width: 100%;
 }
 
-.btn-lang {
-  background: linear-gradient(135deg, #c9a96e, #b87333);
+/* دکمه‌های هدر */
+.btn-lang, .btn-theme {
+  background: var(--btn-gradient);
   color: #1a1410;
   border: none;
   border-radius: 50px;
-  padding: 8px 24px;
+  padding: 8px 20px;
   font-weight: 600;
   transition: 0.3s;
+  margin-left: 8px;
 }
-.btn-lang:hover {
+.btn-theme {
+  padding: 8px 14px;
+}
+.btn-lang:hover, .btn-theme:hover {
   transform: scale(1.05);
-  box-shadow: 0 0 30px rgba(201, 169, 110, 0.3);
+  box-shadow: var(--btn-hover-shadow);
 }
 
 /* ===== Hero ===== */
@@ -170,16 +212,54 @@ body::before {
 }
 .hero-content h1 {
   text-shadow: 0 8px 40px rgba(0,0,0,0.6);
-  color: #fff;
+  color: var(--text-primary);
   font-size: 3.5rem;
 }
 .hero-content p {
   font-size: 1.4rem;
-  color: #f0ebe4;
+  color: var(--text-muted);
+}
+
+/* ویجت رزرو */
+.booking-widget {
+  padding: 20px 25px;
+  margin: 30px auto;
+  max-width: 700px;
+  border-radius: 30px !important;
+}
+.booking-widget label {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+.booking-widget .form-control {
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.15);
+  color: var(--text-primary);
+  border-radius: 12px;
+}
+.booking-widget .form-control:focus {
+  background: rgba(255,255,255,0.15);
+  border-color: #c9a96e;
+  box-shadow: 0 0 20px rgba(201,169,110,0.2);
+}
+.btn-book {
+  background: var(--btn-gradient);
+  color: #1a1410;
+  border: none;
+  border-radius: 50px;
+  padding: 10px 24px;
+  font-weight: 700;
+  transition: 0.3s;
+  width: 100%;
+}
+.btn-book:hover {
+  transform: scale(1.03);
+  box-shadow: var(--btn-hover-shadow);
+  color: #1a1410;
 }
 
 .btn-hero {
-  background: linear-gradient(135deg, #c9a96e, #b87333);
+  background: var(--btn-gradient);
   color: #1a1410;
   padding: 14px 50px;
   border-radius: 50px;
@@ -190,16 +270,16 @@ body::before {
 }
 .btn-hero:hover {
   background: transparent;
-  color: #fff;
+  color: var(--text-primary);
   border-color: #c9a96e;
   transform: translateY(-4px) scale(1.02);
-  box-shadow: 0 0 40px rgba(201, 169, 110, 0.2);
+  box-shadow: var(--btn-hover-shadow);
 }
 
 /* ===== عناوین ===== */
 h2 {
   font-weight: 700;
-  color: #f0ebe4;
+  color: var(--text-primary);
   position: relative;
   display: inline-block;
   text-shadow: 0 4px 20px rgba(0,0,0,0.5);
@@ -230,6 +310,77 @@ h2::after {
   padding: 80px 0;
   position: relative;
   z-index: 1;
+}
+
+/* ===== گالری ===== */
+.gallery-img {
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: transform 0.4s, box-shadow 0.4s;
+}
+.gallery-img:hover {
+  transform: scale(1.03);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.4);
+}
+
+/* ===== لایت‌باکس ===== */
+.lightbox {
+  display: none;
+  position: fixed;
+  z-index: 9999;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.9);
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.lightbox.active {
+  display: flex;
+}
+.lightbox-content {
+  max-width: 85%;
+  max-height: 80%;
+  border-radius: 20px;
+  box-shadow: 0 0 60px rgba(0,0,0,0.6);
+}
+.lightbox-caption {
+  color: #fff;
+  margin-top: 16px;
+  font-size: 1.2rem;
+  text-align: center;
+}
+.lightbox-close {
+  position: absolute;
+  top: 30px;
+  right: 40px;
+  font-size: 3rem;
+  color: #fff;
+  cursor: pointer;
+  transition: 0.3s;
+}
+.lightbox-close:hover { transform: scale(1.2); }
+.lightbox-prev, .lightbox-next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 3rem;
+  color: #fff;
+  cursor: pointer;
+  padding: 20px;
+  transition: 0.3s;
+  user-select: none;
+}
+.lightbox-prev { left: 20px; }
+.lightbox-next { right: 20px; }
+.lightbox-prev:hover, .lightbox-next:hover {
+  background: rgba(255,255,255,0.1);
+  border-radius: 50%;
 }
 
 /* ===== اسلایدر واحدها ===== */
@@ -270,7 +421,7 @@ h2::after {
   padding: 20px;
 }
 .room-info h4 {
-  color: #f0ebe4;
+  color: var(--text-primary);
   font-weight: 700;
 }
 .facilities {
@@ -285,9 +436,8 @@ h2::after {
   color: #c9a96e;
   width: 22px;
 }
-
 .btn-room {
-  background: linear-gradient(135deg, #c9a96e, #b87333);
+  background: var(--btn-gradient);
   color: #1a1410;
   border: none;
   border-radius: 50px;
@@ -299,10 +449,9 @@ h2::after {
 }
 .btn-room:hover {
   transform: scale(1.05);
-  box-shadow: 0 0 30px rgba(201, 169, 110, 0.3);
+  box-shadow: var(--btn-hover-shadow);
   color: #1a1410;
 }
-
 .slider-btn {
   position: absolute;
   top: 50%;
@@ -313,7 +462,7 @@ h2::after {
   border-radius: 50%;
   width: 44px;
   height: 44px;
-  color: #f0ebe4;
+  color: var(--text-primary);
   transition: 0.3s;
   z-index: 5;
 }
@@ -335,15 +484,14 @@ h2::after {
 }
 .attr-card h5 {
   font-weight: 700;
-  color: #f0ebe4;
+  color: var(--text-primary);
 }
 .attr-card p {
   font-size: 0.9rem;
-  color: #d4c9b8;
+  color: var(--text-muted);
 }
-
 .btn-map {
-  background: linear-gradient(135deg, #c9a96e, #b87333);
+  background: var(--btn-gradient);
   color: #1a1410;
   border: none;
   border-radius: 50px;
@@ -359,7 +507,7 @@ h2::after {
   color: #1a1410;
 }
 
-/* ===== نظرات ===== */
+/* ===== نظرات پویا ===== */
 .testimonial-card {
   padding: 25px;
   border-right: 6px solid #c9a96e;
@@ -371,6 +519,14 @@ h2::after {
   font-weight: 600;
   color: #c9a96e;
   font-style: normal;
+}
+.testimonial-card .rating {
+  color: #ffd700;
+  margin-bottom: 8px;
+}
+.nastaliq {
+  font-family: 'Noto Nastaliq Urdu', serif;
+  font-size: 1.1rem;
 }
 
 /* ===== تماس ===== */
@@ -385,7 +541,7 @@ h2::after {
   width: 30px;
 }
 .btn-submit {
-  background: linear-gradient(135deg, #c9a96e, #b87333);
+  background: var(--btn-gradient);
   color: #1a1410;
   padding: 12px 40px;
   border-radius: 50px;
@@ -395,7 +551,7 @@ h2::after {
 }
 .btn-submit:hover {
   transform: scale(1.03);
-  box-shadow: 0 0 30px rgba(201, 169, 110, 0.3);
+  box-shadow: var(--btn-hover-shadow);
 }
 .btn-guide {
   background: linear-gradient(135deg, #b87333, #8d6e63);
@@ -418,11 +574,40 @@ h2::after {
   padding: 30px;
   text-align: center;
   border-radius: 30px !important;
-  background: rgba(26, 20, 16, 0.4) !important;
+  background: var(--bg-secondary) !important;
 }
 .main-footer p {
   margin: 0;
-  color: #d4c9b8;
+  color: var(--text-muted);
+}
+
+/* ===== دکمه بازگشت به بالا ===== */
+.btn-back-top {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  background: var(--btn-gradient);
+  color: #1a1410;
+  border: none;
+  border-radius: 50%;
+  width: 55px;
+  height: 55px;
+  font-size: 1.4rem;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+  transition: 0.4s;
+  z-index: 999;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(20px);
+}
+.btn-back-top.visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+.btn-back-top:hover {
+  transform: scale(1.1);
+  box-shadow: var(--btn-hover-shadow);
 }
 
 /* ===== انیمیشن فید-این ===== */
@@ -436,6 +621,11 @@ h2::after {
   transform: translateY(0);
 }
 
+/* ===== پارالاکس ===== */
+.parallax {
+  transition: transform 0.1s ease-out;
+}
+
 /* ===== ریسپانسیو ===== */
 @media (max-width: 768px) {
   .hero { min-height: 50vh; padding: 30px; margin: 10px; }
@@ -445,10 +635,13 @@ h2::after {
   .logo-img { height: 35px; }
   .section-padding { padding: 50px 0; }
   .navbar-nav { text-align: center; }
-  .btn-lang { margin-top: 10px; }
+  .btn-lang, .btn-theme { margin-top: 10px; }
+  .booking-widget { padding: 15px; }
+  .lightbox-prev, .lightbox-next { font-size: 2rem; padding: 10px; }
 }
 @media (max-width: 576px) {
   .hero-content h1 { font-size: 1.8rem; }
   .room-card { flex: 0 0 180px; }
   .slider-btn { width: 34px; height: 34px; font-size: 0.9rem; }
+  .btn-back-top { width: 45px; height: 45px; font-size: 1rem; bottom: 20px; right: 20px; }
 }

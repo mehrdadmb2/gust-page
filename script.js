@@ -1,27 +1,23 @@
 // ============================================================
-// 0. مدیریت تم (دارک‌مود / روشن)
+// 0. تم (دارک‌مود)
 // ============================================================
 (function initTheme() {
   const theme = localStorage.getItem('vakilstay-theme') || 'dark';
   document.documentElement.setAttribute('data-theme', theme);
   const icon = document.querySelector('#themeToggle i');
-  if (icon) {
-    icon.className = theme === 'dark' ? 'fas fa-moon' : 'fas fa-sun';
-  }
+  if (icon) icon.className = theme === 'dark' ? 'fas fa-moon' : 'fas fa-sun';
 })();
-
 document.getElementById('themeToggle').addEventListener('click', function() {
   const html = document.documentElement;
   const current = html.getAttribute('data-theme');
   const next = current === 'dark' ? 'light' : 'dark';
   html.setAttribute('data-theme', next);
   localStorage.setItem('vakilstay-theme', next);
-  const icon = this.querySelector('i');
-  icon.className = next === 'dark' ? 'fas fa-moon' : 'fas fa-sun';
+  this.querySelector('i').className = next === 'dark' ? 'fas fa-moon' : 'fas fa-sun';
 });
 
 // ============================================================
-// 1. مدیریت تغییر زبان
+// 1. زبان
 // ============================================================
 const langToggle = document.getElementById('langToggle');
 const langLabel = document.getElementById('langLabel');
@@ -33,12 +29,10 @@ function switchLanguage(lang) {
   document.documentElement.lang = lang === 'fa' ? 'fa' : 'en';
   document.documentElement.dir = lang === 'fa' ? 'rtl' : 'ltr';
   langLabel.textContent = lang === 'fa' ? 'فارسی' : 'English';
-
   document.querySelectorAll('[data-fa][data-en]').forEach(el => {
     const text = lang === 'fa' ? el.getAttribute('data-fa') : el.getAttribute('data-en');
     if (text) el.textContent = text;
   });
-  // به‌روزرسانی placeholder‌ها
   document.querySelectorAll('[data-fa-placeholder][data-en-placeholder]').forEach(el => {
     el.placeholder = lang === 'fa' ? el.getAttribute('data-fa-placeholder') : el.getAttribute('data-en-placeholder');
   });
@@ -51,15 +45,11 @@ if (langToggle) {
 switchLanguage(currentLang);
 
 // ============================================================
-// 2. هدر پویا (شفافیت هنگام اسکرول)
+// 2. هدر پویا
 // ============================================================
 const header = document.getElementById('mainHeader');
 window.addEventListener('scroll', () => {
-  if (window.scrollY > 50) {
-    header.classList.add('scrolled');
-  } else {
-    header.classList.remove('scrolled');
-  }
+  header.classList.toggle('scrolled', window.scrollY > 50);
 });
 
 // ============================================================
@@ -67,15 +57,9 @@ window.addEventListener('scroll', () => {
 // ============================================================
 const backBtn = document.getElementById('backToTop');
 window.addEventListener('scroll', () => {
-  if (window.scrollY > 400) {
-    backBtn.classList.add('visible');
-  } else {
-    backBtn.classList.remove('visible');
-  }
+  backBtn.classList.toggle('visible', window.scrollY > 400);
 });
-backBtn.addEventListener('click', () => {
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-});
+backBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
 
 // ============================================================
 // 4. اسلایدر واحدها
@@ -94,7 +78,6 @@ if (slider && prevBtn && nextBtn) {
   prevBtn.addEventListener('click', () => slide('prev'));
   nextBtn.addEventListener('click', () => slide('next'));
 
-  // اسکرول خودکار (مکث در هاور)
   let autoSlide = setInterval(() => slide('next'), 5000);
   slider.addEventListener('mouseenter', () => clearInterval(autoSlide));
   slider.addEventListener('mouseleave', () => {
@@ -103,19 +86,15 @@ if (slider && prevBtn && nextBtn) {
 }
 
 // ============================================================
-// 5. منوی همبرگر (رفع باگ)
+// 5. منوی همبرگر
 // ============================================================
-const navToggle = document.getElementById('navToggle');
-const navCollapse = document.getElementById('navbarNav');
-if (navToggle && navCollapse) {
-  navToggle.addEventListener('click', function(e) {
-    e.preventDefault();
-    navCollapse.classList.toggle('show');
-  });
-}
+document.getElementById('navToggle').addEventListener('click', function(e) {
+  e.preventDefault();
+  document.getElementById('navbarNav').classList.toggle('show');
+});
 
 // ============================================================
-// 6. انیمیشن فید-این هنگام اسکرول
+// 6. انیمیشن فید-این
 // ============================================================
 const observer = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
@@ -125,14 +104,13 @@ const observer = new IntersectionObserver((entries) => {
     }
   });
 }, { threshold: 0.15 });
-
 document.querySelectorAll('.glass-card, .attr-card, .testimonial-card, .gallery-img').forEach(el => {
   el.classList.add('fade-in');
   observer.observe(el);
 });
 
 // ============================================================
-// 7. لودینگ تدریجی تصاویر (Lazy Loading با Intersection Observer)
+// 7. لودینگ تدریجی
 // ============================================================
 if ('IntersectionObserver' in window) {
   const lazyImages = document.querySelectorAll('img.lazy');
@@ -140,7 +118,7 @@ if ('IntersectionObserver' in window) {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
         const img = entry.target;
-        img.src = img.src; // ریلود
+        img.src = img.src;
         img.classList.remove('lazy');
         imageObserver.unobserve(img);
       }
@@ -150,16 +128,12 @@ if ('IntersectionObserver' in window) {
 }
 
 // ============================================================
-// 8. لایت‌باکس گالری
+// 8. لایت‌باکس
 // ============================================================
 const lightbox = document.getElementById('lightbox');
 const lightboxImg = document.getElementById('lightboxImg');
 const lightboxCaption = document.getElementById('lightboxCaption');
-const closeLightbox = document.querySelector('.lightbox-close');
-const prevLightbox = document.querySelector('.lightbox-prev');
-const nextLightbox = document.querySelector('.lightbox-next');
-let galleryImages = [];
-let currentIndex = 0;
+let galleryImages = [], currentIndex = 0;
 
 document.querySelectorAll('.gallery-img').forEach((img, index) => {
   img.addEventListener('click', function() {
@@ -175,22 +149,17 @@ function openLightbox(src, title) {
   lightbox.classList.add('active');
   document.body.style.overflow = 'hidden';
 }
-
 function closeLightboxFn() {
   lightbox.classList.remove('active');
   document.body.style.overflow = '';
 }
-
-closeLightbox.addEventListener('click', closeLightboxFn);
-lightbox.addEventListener('click', function(e) {
-  if (e.target === this) closeLightboxFn();
-});
+document.querySelector('.lightbox-close').addEventListener('click', closeLightboxFn);
+lightbox.addEventListener('click', function(e) { if (e.target === this) closeLightboxFn(); });
 document.addEventListener('keydown', function(e) {
   if (e.key === 'Escape') closeLightboxFn();
   if (e.key === 'ArrowLeft') navigateLightbox(-1);
   if (e.key === 'ArrowRight') navigateLightbox(1);
 });
-
 function navigateLightbox(dir) {
   if (!galleryImages.length) return;
   currentIndex = (currentIndex + dir + galleryImages.length) % galleryImages.length;
@@ -198,16 +167,14 @@ function navigateLightbox(dir) {
   lightboxImg.src = img.src;
   lightboxCaption.textContent = img.dataset.title || '';
 }
-prevLightbox.addEventListener('click', () => navigateLightbox(-1));
-nextLightbox.addEventListener('click', () => navigateLightbox(1));
+document.querySelector('.lightbox-prev').addEventListener('click', () => navigateLightbox(-1));
+document.querySelector('.lightbox-next').addEventListener('click', () => navigateLightbox(1));
 
 // ============================================================
-// 9. نظرات پویا (ذخیره در localStorage)
+// 9. نظرات پویا
 // ============================================================
 const STORAGE_KEY = 'vakilstay_reviews';
 let reviews = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
-
-// نظرات پیش‌فرض (اگر خالی بود)
 if (!reviews.length) {
   reviews = [
     { name: 'محمد ر.', rating: 5, text: 'اقامت فوق‌العاده‌ای بود. موقعیت مکانی عالی و صاحبخانه بسیار مهمان‌نواز.' },
@@ -220,12 +187,11 @@ if (!reviews.length) {
 function renderReviews() {
   const container = document.getElementById('dynamicTestimonials');
   if (!container) return;
-  const lang = currentLang;
-  container.innerHTML = reviews.map((r, i) => `
+  container.innerHTML = reviews.map(r => `
     <div class="col-md-4">
       <div class="testimonial-card glass-card">
         <div class="rating">${'★'.repeat(r.rating)}${'☆'.repeat(5 - r.rating)}</div>
-        <p class="nastaliq">${lang === 'fa' ? r.text : r.textEn || r.text}</p>
+        <p class="nastaliq">${r.text}</p>
         <span>- ${r.name}</span>
       </div>
     </div>
@@ -233,55 +199,77 @@ function renderReviews() {
 }
 renderReviews();
 
-// فرم ارسال نظر
-const reviewForm = document.getElementById('reviewForm');
-if (reviewForm) {
-  reviewForm.addEventListener('submit', function(e) {
-    e.preventDefault();
-    const name = document.getElementById('reviewName').value.trim();
-    const rating = parseInt(document.getElementById('reviewRating').value);
-    const text = document.getElementById('reviewText').value.trim();
-    if (!name || !rating || !text) {
-      alert(currentLang === 'fa' ? 'لطفاً همه فیلدها را پر کنید.' : 'Please fill all fields.');
-      return;
-    }
-    if (rating < 1 || rating > 5) {
-      alert(currentLang === 'fa' ? 'امتیاز باید بین ۱ تا ۵ باشد.' : 'Rating must be between 1 and 5.');
-      return;
-    }
-    reviews.unshift({ name, rating, text });
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(reviews));
-    renderReviews();
-    this.reset();
-    alert(currentLang === 'fa' ? 'نظر شما با موفقیت ثبت شد!' : 'Your review submitted!');
-  });
-}
+document.getElementById('reviewForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+  const name = document.getElementById('reviewName').value.trim();
+  const rating = parseInt(document.getElementById('reviewRating').value);
+  const text = document.getElementById('reviewText').value.trim();
+  if (!name || !rating || !text) {
+    alert(currentLang === 'fa' ? 'لطفاً همه فیلدها را پر کنید.' : 'Please fill all fields.');
+    return;
+  }
+  if (rating < 1 || rating > 5) {
+    alert(currentLang === 'fa' ? 'امتیاز باید بین ۱ تا ۵ باشد.' : 'Rating must be between 1 and 5.');
+    return;
+  }
+  reviews.unshift({ name, rating, text });
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(reviews));
+  renderReviews();
+  this.reset();
+  alert(currentLang === 'fa' ? 'نظر شما با موفقیت ثبت شد!' : 'Your review submitted!');
+});
 
 // ============================================================
-// 10. ویجت رزرو (اتصال به جاجیگا)
+// 10. جاذبه‌ها:切换 بین لیست و نقشه تعاملی
 // ============================================================
-document.getElementById('bookNow').addEventListener('click', function(e) {
-  e.preventDefault();
-  const checkin = document.getElementById('checkin').value;
-  const checkout = document.getElementById('checkout').value;
-  const guests = document.getElementById('guests').value || 2;
-  // باز کردن لینک جاجیگا (می‌توانید لینک اصلی را قرار دهید)
-  window.open('https://www.jajiga.com/r/3hwx/dr', '_blank');
-});
+const listViewBtn = document.getElementById('listViewBtn');
+const mapViewBtn = document.getElementById('mapViewBtn');
+const attractionsList = document.getElementById('attractionsList');
+const attractionsMap = document.getElementById('attractionsMap');
+let mapInitialized = false;
+
+function switchAttractionView(view) {
+  if (view === 'list') {
+    attractionsList.style.display = 'flex';
+    attractionsMap.style.display = 'none';
+    listViewBtn.classList.add('active');
+    mapViewBtn.classList.remove('active');
+  } else {
+    attractionsList.style.display = 'none';
+    attractionsMap.style.display = 'block';
+    listViewBtn.classList.remove('active');
+    mapViewBtn.classList.add('active');
+    // بارگذاری نقشه فقط یک بار
+    if (!mapInitialized && typeof L !== 'undefined') {
+      initMap();
+      mapInitialized = true;
+    }
+  }
+}
+
+listViewBtn.addEventListener('click', () => switchAttractionView('list'));
+mapViewBtn.addEventListener('click', () => switchAttractionView('map'));
 
 // ============================================================
 // 11. نقشه تعاملی (Leaflet)
 // ============================================================
-if (typeof L !== 'undefined' && document.getElementById('mapContainer')) {
+function initMap() {
+  const container = document.getElementById('mapContainer');
+  if (!container) return;
   const map = L.map('mapContainer').setView([29.6127, 52.5516], 13);
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '© OpenStreetMap'
   }).addTo(map);
 
-  // نشانگر اقامتگاه (آبی)
-  L.marker([29.6127, 52.5516], { icon: L.icon({ iconUrl: 'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-blue.png', shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png', iconSize: [25, 41], iconAnchor: [12, 41] }) })
-    .addTo(map)
-    .bindPopup('<b>اقامتگاه وکیل</b><br>خیابان وکیل، بازار وکیل');
+  // اقامتگاه (آبی)
+  L.marker([29.6127, 52.5516], {
+    icon: L.icon({
+      iconUrl: 'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-blue.png',
+      shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png',
+      iconSize: [25, 41],
+      iconAnchor: [12, 41]
+    })
+  }).addTo(map).bindPopup('<b>اقامتگاه وکیل</b><br>خیابان وکیل، بازار وکیل');
 
   // جاذبه‌ها (قرمز)
   const attractions = [
@@ -296,45 +284,51 @@ if (typeof L !== 'undefined' && document.getElementById('mapContainer')) {
     { name: 'مسجد وکیل', lat: 29.6144, lng: 52.5454 }
   ];
   attractions.forEach(a => {
-    L.marker([a.lat, a.lng], { icon: L.icon({ iconUrl: 'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png', shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png', iconSize: [25, 41], iconAnchor: [12, 41] }) })
-      .addTo(map)
-      .bindPopup(`<b>${a.name}</b>`);
+    L.marker([a.lat, a.lng], {
+      icon: L.icon({
+        iconUrl: 'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png',
+        shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png',
+        iconSize: [25, 41],
+        iconAnchor: [12, 41]
+      })
+    }).addTo(map).bindPopup(`<b>${a.name}</b>`);
   });
+
+  // ریسایز نقشه بعد از نمایش
+  setTimeout(() => map.invalidateSize(), 400);
 }
 
 // ============================================================
-// 12. افکت پارالاکس ملایم (برای کارت‌ها)
+// 12. پارالاکس ملایم
 // ============================================================
 document.addEventListener('scroll', function() {
   const cards = document.querySelectorAll('.glass-card');
   const scrollY = window.scrollY;
   cards.forEach((card, i) => {
-    const speed = 0.05 + (i % 3) * 0.02;
-    const offset = scrollY * speed;
-    card.style.transform = `translateY(${offset}px)`;
+    const speed = 0.03 + (i % 3) * 0.015;
+    card.style.transform = `translateY(${scrollY * speed}px)`;
   });
 });
 
 // ============================================================
-// 13. فرم تماس (با اعتبارسنجی و پیام)
+// 13. فرم تماس
 // ============================================================
-const contactForm = document.getElementById('contactForm');
-if (contactForm) {
-  contactForm.addEventListener('submit', function(e) {
-    e.preventDefault();
-    const name = this.querySelector('input[type="text"]')?.value.trim();
-    const email = this.querySelector('input[type="email"]')?.value.trim();
-    const msg = this.querySelector('textarea')?.value.trim();
-    if (!name || !email || !msg) {
-      alert(currentLang === 'fa' ? 'لطفاً همه فیلدها را پر کنید.' : 'Please fill all fields.');
-      return;
-    }
-    alert(currentLang === 'fa' ? 'پیام شما با موفقیت ارسال شد!' : 'Your message sent successfully!');
-    this.reset();
-  });
-}
+document.getElementById('contactForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+  const name = this.querySelector('input[type="text"]')?.value.trim();
+  const email = this.querySelector('input[type="email"]')?.value.trim();
+  const msg = this.querySelector('textarea')?.value.trim();
+  if (!name || !email || !msg) {
+    alert(currentLang === 'fa' ? 'لطفاً همه فیلدها را پر کنید.' : 'Please fill all fields.');
+    return;
+  }
+  alert(currentLang === 'fa' ? 'پیام شما با موفقیت ارسال شد!' : 'Your message sent successfully!');
+  this.reset();
+});
 
 // ============================================================
 // 14. مقداردهی اولیه
 // ============================================================
 console.log('✅ VakilStay fully loaded with all features!');
+// اطمینان از نمایش لیست جاذبه‌ها در ابتدا
+switchAttractionView('list');

@@ -110,7 +110,7 @@ document.querySelectorAll('.glass-card, .attr-card, .testimonial-card, .gallery-
 });
 
 // ============================================================
-// 7. لودینگ تدریجی
+// 7. لودینگ تدریجی تصاویر
 // ============================================================
 if ('IntersectionObserver' in window) {
   const lazyImages = document.querySelectorAll('img.lazy');
@@ -220,7 +220,7 @@ document.getElementById('reviewForm').addEventListener('submit', function(e) {
 });
 
 // ============================================================
-// 10. جاذبه‌ها:切换 بین لیست و نقشه تعاملی
+// 10. جاذبه‌ها:切换 بین لیست و نقشه (با کلاس‌های Bootstrap)
 // ============================================================
 const listViewBtn = document.getElementById('listViewBtn');
 const mapViewBtn = document.getElementById('mapViewBtn');
@@ -230,16 +230,15 @@ let mapInitialized = false;
 
 function switchAttractionView(view) {
   if (view === 'list') {
-    attractionsList.style.display = 'flex';
-    attractionsMap.style.display = 'none';
+    attractionsList.classList.remove('d-none');
+    attractionsMap.classList.add('d-none');
     listViewBtn.classList.add('active');
     mapViewBtn.classList.remove('active');
   } else {
-    attractionsList.style.display = 'none';
-    attractionsMap.style.display = 'block';
+    attractionsList.classList.add('d-none');
+    attractionsMap.classList.remove('d-none');
     listViewBtn.classList.remove('active');
     mapViewBtn.classList.add('active');
-    // بارگذاری نقشه فقط یک بار
     if (!mapInitialized && typeof L !== 'undefined') {
       initMap();
       mapInitialized = true;
@@ -261,7 +260,6 @@ function initMap() {
     attribution: '© OpenStreetMap'
   }).addTo(map);
 
-  // اقامتگاه (آبی)
   L.marker([29.6127, 52.5516], {
     icon: L.icon({
       iconUrl: 'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-blue.png',
@@ -271,7 +269,6 @@ function initMap() {
     })
   }).addTo(map).bindPopup('<b>اقامتگاه وکیل</b><br>خیابان وکیل، بازار وکیل');
 
-  // جاذبه‌ها (قرمز)
   const attractions = [
     { name: 'تخت جمشید', lat: 29.9352, lng: 52.8896 },
     { name: 'پاسارگاد', lat: 30.1939, lng: 53.1672 },
@@ -294,7 +291,6 @@ function initMap() {
     }).addTo(map).bindPopup(`<b>${a.name}</b>`);
   });
 
-  // ریسایز نقشه بعد از نمایش
   setTimeout(() => map.invalidateSize(), 400);
 }
 
@@ -327,8 +323,7 @@ document.getElementById('contactForm').addEventListener('submit', function(e) {
 });
 
 // ============================================================
-// 14. مقداردهی اولیه
+// 14. مقداردهی اولیه (نمایش لیست جاذبه‌ها)
 // ============================================================
-console.log('✅ VakilStay fully loaded with all features!');
-// اطمینان از نمایش لیست جاذبه‌ها در ابتدا
 switchAttractionView('list');
+console.log('✅ VakilStay fully loaded with all features!');

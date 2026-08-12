@@ -1,647 +1,340 @@
-/* ===== متغیرهای CSS (پشتیبانی از تم روشن/تاریک) ===== */
-:root {
-  --bg-primary: #1a1410;
-  --bg-secondary: rgba(26, 20, 16, 0.5);
-  --text-primary: #f0ebe4;
-  --text-muted: #d4c9b8;
-  --glass-bg: rgba(255, 255, 255, 0.06);
-  --glass-border: rgba(201, 169, 110, 0.25);
-  --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
-  --gradient-start: #b87333;
-  --gradient-mid: #5d4037;
-  --gradient-end: #1a1410;
-  --card-hover-bg: rgba(255, 255, 255, 0.12);
-  --btn-gradient: linear-gradient(135deg, #c9a96e, #b87333);
-  --btn-hover-shadow: 0 0 30px rgba(201, 169, 110, 0.3);
+// ============================================================
+// 0. مدیریت تم (دارک‌مود / روشن)
+// ============================================================
+(function initTheme() {
+  const theme = localStorage.getItem('vakilstay-theme') || 'dark';
+  document.documentElement.setAttribute('data-theme', theme);
+  const icon = document.querySelector('#themeToggle i');
+  if (icon) {
+    icon.className = theme === 'dark' ? 'fas fa-moon' : 'fas fa-sun';
+  }
+})();
+
+document.getElementById('themeToggle').addEventListener('click', function() {
+  const html = document.documentElement;
+  const current = html.getAttribute('data-theme');
+  const next = current === 'dark' ? 'light' : 'dark';
+  html.setAttribute('data-theme', next);
+  localStorage.setItem('vakilstay-theme', next);
+  const icon = this.querySelector('i');
+  icon.className = next === 'dark' ? 'fas fa-moon' : 'fas fa-sun';
+});
+
+// ============================================================
+// 1. مدیریت تغییر زبان
+// ============================================================
+const langToggle = document.getElementById('langToggle');
+const langLabel = document.getElementById('langLabel');
+let currentLang = localStorage.getItem('vakilstay-lang') || 'fa';
+
+function switchLanguage(lang) {
+  currentLang = lang;
+  localStorage.setItem('vakilstay-lang', lang);
+  document.documentElement.lang = lang === 'fa' ? 'fa' : 'en';
+  document.documentElement.dir = lang === 'fa' ? 'rtl' : 'ltr';
+  langLabel.textContent = lang === 'fa' ? 'فارسی' : 'English';
+
+  document.querySelectorAll('[data-fa][data-en]').forEach(el => {
+    const text = lang === 'fa' ? el.getAttribute('data-fa') : el.getAttribute('data-en');
+    if (text) el.textContent = text;
+  });
+  // به‌روزرسانی placeholder‌ها
+  document.querySelectorAll('[data-fa-placeholder][data-en-placeholder]').forEach(el => {
+    el.placeholder = lang === 'fa' ? el.getAttribute('data-fa-placeholder') : el.getAttribute('data-en-placeholder');
+  });
+}
+if (langToggle) {
+  langToggle.addEventListener('click', () => {
+    switchLanguage(currentLang === 'fa' ? 'en' : 'fa');
+  });
+}
+switchLanguage(currentLang);
+
+// ============================================================
+// 2. هدر پویا (شفافیت هنگام اسکرول)
+// ============================================================
+const header = document.getElementById('mainHeader');
+window.addEventListener('scroll', () => {
+  if (window.scrollY > 50) {
+    header.classList.add('scrolled');
+  } else {
+    header.classList.remove('scrolled');
+  }
+});
+
+// ============================================================
+// 3. دکمه بازگشت به بالا
+// ============================================================
+const backBtn = document.getElementById('backToTop');
+window.addEventListener('scroll', () => {
+  if (window.scrollY > 400) {
+    backBtn.classList.add('visible');
+  } else {
+    backBtn.classList.remove('visible');
+  }
+});
+backBtn.addEventListener('click', () => {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+});
+
+// ============================================================
+// 4. اسلایدر واحدها
+// ============================================================
+const slider = document.getElementById('roomsSlider');
+const prevBtn = document.getElementById('prevBtn');
+const nextBtn = document.getElementById('nextBtn');
+
+if (slider && prevBtn && nextBtn) {
+  function slide(direction) {
+    const card = slider.querySelector('.room-card');
+    if (!card) return;
+    const cardWidth = card.offsetWidth + 24;
+    slider.scrollBy({ left: direction === 'next' ? cardWidth : -cardWidth, behavior: 'smooth' });
+  }
+  prevBtn.addEventListener('click', () => slide('prev'));
+  nextBtn.addEventListener('click', () => slide('next'));
+
+  // اسکرول خودکار (مکث در هاور)
+  let autoSlide = setInterval(() => slide('next'), 5000);
+  slider.addEventListener('mouseenter', () => clearInterval(autoSlide));
+  slider.addEventListener('mouseleave', () => {
+    autoSlide = setInterval(() => slide('next'), 5000);
+  });
 }
 
-[data-theme="light"] {
-  --bg-primary: #f5efe8;
-  --bg-secondary: rgba(245, 239, 232, 0.7);
-  --text-primary: #3e2c1b;
-  --text-muted: #6d5d4e;
-  --glass-bg: rgba(255, 255, 255, 0.4);
-  --glass-border: rgba(201, 169, 110, 0.3);
-  --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-  --gradient-start: #e8d5b0;
-  --gradient-mid: #d4b896;
-  --gradient-end: #f5efe8;
-  --card-hover-bg: rgba(255, 255, 255, 0.6);
-  --btn-gradient: linear-gradient(135deg, #c9a96e, #b87333);
-  --btn-hover-shadow: 0 0 30px rgba(201, 169, 110, 0.4);
+// ============================================================
+// 5. منوی همبرگر (رفع باگ)
+// ============================================================
+const navToggle = document.getElementById('navToggle');
+const navCollapse = document.getElementById('navbarNav');
+if (navToggle && navCollapse) {
+  navToggle.addEventListener('click', function(e) {
+    e.preventDefault();
+    navCollapse.classList.toggle('show');
+  });
 }
 
-/* ===== اعمال متغیرها ===== */
-body {
-  font-family: 'Vazirmatn', sans-serif;
-  color: var(--text-primary);
-  background: var(--bg-primary);
-  transition: background 0.4s, color 0.4s;
-  overflow-x: hidden;
-  min-height: 100vh;
-  position: relative;
+// ============================================================
+// 6. انیمیشن فید-این هنگام اسکرول
+// ============================================================
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      observer.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.15 });
+
+document.querySelectorAll('.glass-card, .attr-card, .testimonial-card, .gallery-img').forEach(el => {
+  el.classList.add('fade-in');
+  observer.observe(el);
+});
+
+// ============================================================
+// 7. لودینگ تدریجی تصاویر (Lazy Loading با Intersection Observer)
+// ============================================================
+if ('IntersectionObserver' in window) {
+  const lazyImages = document.querySelectorAll('img.lazy');
+  const imageObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const img = entry.target;
+        img.src = img.src; // ریلود
+        img.classList.remove('lazy');
+        imageObserver.unobserve(img);
+      }
+    });
+  });
+  lazyImages.forEach(img => imageObserver.observe(img));
 }
 
-/* ===== الگوی پس‌زمینه ===== */
-.pattern-bg {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: -1;
-  background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23c9a96e' fill-opacity='0.08'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-  background-size: 80px 80px;
-  animation: patternMove 60s linear infinite;
+// ============================================================
+// 8. لایت‌باکس گالری
+// ============================================================
+const lightbox = document.getElementById('lightbox');
+const lightboxImg = document.getElementById('lightboxImg');
+const lightboxCaption = document.getElementById('lightboxCaption');
+const closeLightbox = document.querySelector('.lightbox-close');
+const prevLightbox = document.querySelector('.lightbox-prev');
+const nextLightbox = document.querySelector('.lightbox-next');
+let galleryImages = [];
+let currentIndex = 0;
+
+document.querySelectorAll('.gallery-img').forEach((img, index) => {
+  img.addEventListener('click', function() {
+    galleryImages = Array.from(document.querySelectorAll('.gallery-img'));
+    currentIndex = index;
+    openLightbox(this.src, this.dataset.title || '');
+  });
+});
+
+function openLightbox(src, title) {
+  lightboxImg.src = src;
+  lightboxCaption.textContent = title;
+  lightbox.classList.add('active');
+  document.body.style.overflow = 'hidden';
 }
 
-@keyframes patternMove {
-  0% { background-position: 0 0; }
-  100% { background-position: 100% 100%; }
+function closeLightboxFn() {
+  lightbox.classList.remove('active');
+  document.body.style.overflow = '';
 }
 
-/* ===== گرادینت پس‌زمینه متحرک ===== */
-body::before {
-  content: '';
-  position: fixed;
-  top: -50%;
-  left: -50%;
-  width: 200%;
-  height: 200%;
-  z-index: -2;
-  background: radial-gradient(circle at 30% 40%, var(--gradient-start) 0%, var(--gradient-mid) 40%, var(--gradient-end) 80%);
-  animation: gradientShift 20s ease-in-out infinite alternate;
-  transition: background 0.6s;
+closeLightbox.addEventListener('click', closeLightboxFn);
+lightbox.addEventListener('click', function(e) {
+  if (e.target === this) closeLightboxFn();
+});
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') closeLightboxFn();
+  if (e.key === 'ArrowLeft') navigateLightbox(-1);
+  if (e.key === 'ArrowRight') navigateLightbox(1);
+});
+
+function navigateLightbox(dir) {
+  if (!galleryImages.length) return;
+  currentIndex = (currentIndex + dir + galleryImages.length) % galleryImages.length;
+  const img = galleryImages[currentIndex];
+  lightboxImg.src = img.src;
+  lightboxCaption.textContent = img.dataset.title || '';
+}
+prevLightbox.addEventListener('click', () => navigateLightbox(-1));
+nextLightbox.addEventListener('click', () => navigateLightbox(1));
+
+// ============================================================
+// 9. نظرات پویا (ذخیره در localStorage)
+// ============================================================
+const STORAGE_KEY = 'vakilstay_reviews';
+let reviews = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+
+// نظرات پیش‌فرض (اگر خالی بود)
+if (!reviews.length) {
+  reviews = [
+    { name: 'محمد ر.', rating: 5, text: 'اقامت فوق‌العاده‌ای بود. موقعیت مکانی عالی و صاحبخانه بسیار مهمان‌نواز.' },
+    { name: 'سارا م.', rating: 5, text: 'خانه سنتی و تمیز، نزدیک به همه جا. حتماً دوباره می‌آیم.' },
+    { name: 'علی ک.', rating: 4, text: 'ارزش هر ریال را داشت. شیراز زیبا و این اقامتگاه تجربه را کامل کرد.' }
+  ];
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(reviews));
 }
 
-@keyframes gradientShift {
-  0% { transform: translate(0, 0) scale(1); }
-  50% { transform: translate(5%, 5%) scale(1.1); }
-  100% { transform: translate(-5%, -10%) scale(1.2); }
+function renderReviews() {
+  const container = document.getElementById('dynamicTestimonials');
+  if (!container) return;
+  const lang = currentLang;
+  container.innerHTML = reviews.map((r, i) => `
+    <div class="col-md-4">
+      <div class="testimonial-card glass-card">
+        <div class="rating">${'★'.repeat(r.rating)}${'☆'.repeat(5 - r.rating)}</div>
+        <p class="nastaliq">${lang === 'fa' ? r.text : r.textEn || r.text}</p>
+        <span>- ${r.name}</span>
+      </div>
+    </div>
+  `).join('');
+}
+renderReviews();
+
+// فرم ارسال نظر
+const reviewForm = document.getElementById('reviewForm');
+if (reviewForm) {
+  reviewForm.addEventListener('submit', function(e) {
+    e.preventDefault();
+    const name = document.getElementById('reviewName').value.trim();
+    const rating = parseInt(document.getElementById('reviewRating').value);
+    const text = document.getElementById('reviewText').value.trim();
+    if (!name || !rating || !text) {
+      alert(currentLang === 'fa' ? 'لطفاً همه فیلدها را پر کنید.' : 'Please fill all fields.');
+      return;
+    }
+    if (rating < 1 || rating > 5) {
+      alert(currentLang === 'fa' ? 'امتیاز باید بین ۱ تا ۵ باشد.' : 'Rating must be between 1 and 5.');
+      return;
+    }
+    reviews.unshift({ name, rating, text });
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(reviews));
+    renderReviews();
+    this.reset();
+    alert(currentLang === 'fa' ? 'نظر شما با موفقیت ثبت شد!' : 'Your review submitted!');
+  });
 }
 
-/* ===== Glassmorphism ===== */
-.glass, .glass-card {
-  background: var(--glass-bg) !important;
-  backdrop-filter: blur(20px) saturate(200%) !important;
-  -webkit-backdrop-filter: blur(20px) saturate(200%) !important;
-  border: 1px solid var(--glass-border) !important;
-  box-shadow: var(--glass-shadow), 0 0 40px rgba(201, 169, 110, 0.05) !important;
-  border-radius: 24px !important;
-  transition: all 0.4s ease;
+// ============================================================
+// 10. ویجت رزرو (اتصال به جاجیگا)
+// ============================================================
+document.getElementById('bookNow').addEventListener('click', function(e) {
+  e.preventDefault();
+  const checkin = document.getElementById('checkin').value;
+  const checkout = document.getElementById('checkout').value;
+  const guests = document.getElementById('guests').value || 2;
+  // باز کردن لینک جاجیگا (می‌توانید لینک اصلی را قرار دهید)
+  window.open('https://www.jajiga.com/r/3hwx/dr', '_blank');
+});
+
+// ============================================================
+// 11. نقشه تعاملی (Leaflet)
+// ============================================================
+if (typeof L !== 'undefined' && document.getElementById('mapContainer')) {
+  const map = L.map('mapContainer').setView([29.6127, 52.5516], 13);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '© OpenStreetMap'
+  }).addTo(map);
+
+  // نشانگر اقامتگاه (آبی)
+  L.marker([29.6127, 52.5516], { icon: L.icon({ iconUrl: 'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-blue.png', shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png', iconSize: [25, 41], iconAnchor: [12, 41] }) })
+    .addTo(map)
+    .bindPopup('<b>اقامتگاه وکیل</b><br>خیابان وکیل، بازار وکیل');
+
+  // جاذبه‌ها (قرمز)
+  const attractions = [
+    { name: 'تخت جمشید', lat: 29.9352, lng: 52.8896 },
+    { name: 'پاسارگاد', lat: 30.1939, lng: 53.1672 },
+    { name: 'حافظیه', lat: 29.6253, lng: 52.5579 },
+    { name: 'سعدیه', lat: 29.6219, lng: 52.5819 },
+    { name: 'باغ ارم', lat: 29.6368, lng: 52.5256 },
+    { name: 'باغ عفیف‌آباد', lat: 29.6236, lng: 52.4993 },
+    { name: 'بازار وکیل', lat: 29.615, lng: 52.5468 },
+    { name: 'ارگ کریم‌خان', lat: 29.6176, lng: 52.5447 },
+    { name: 'مسجد وکیل', lat: 29.6144, lng: 52.5454 }
+  ];
+  attractions.forEach(a => {
+    L.marker([a.lat, a.lng], { icon: L.icon({ iconUrl: 'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png', shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png', iconSize: [25, 41], iconAnchor: [12, 41] }) })
+      .addTo(map)
+      .bindPopup(`<b>${a.name}</b>`);
+  });
 }
 
-.glass-card:hover {
-  background: var(--card-hover-bg) !important;
-  transform: translateY(-8px) scale(1.01);
-  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.6), 0 0 60px rgba(201, 169, 110, 0.1) !important;
-  border-color: rgba(201, 169, 110, 0.5) !important;
+// ============================================================
+// 12. افکت پارالاکس ملایم (برای کارت‌ها)
+// ============================================================
+document.addEventListener('scroll', function() {
+  const cards = document.querySelectorAll('.glass-card');
+  const scrollY = window.scrollY;
+  cards.forEach((card, i) => {
+    const speed = 0.05 + (i % 3) * 0.02;
+    const offset = scrollY * speed;
+    card.style.transform = `translateY(${offset}px)`;
+  });
+});
+
+// ============================================================
+// 13. فرم تماس (با اعتبارسنجی و پیام)
+// ============================================================
+const contactForm = document.getElementById('contactForm');
+if (contactForm) {
+  contactForm.addEventListener('submit', function(e) {
+    e.preventDefault();
+    const name = this.querySelector('input[type="text"]')?.value.trim();
+    const email = this.querySelector('input[type="email"]')?.value.trim();
+    const msg = this.querySelector('textarea')?.value.trim();
+    if (!name || !email || !msg) {
+      alert(currentLang === 'fa' ? 'لطفاً همه فیلدها را پر کنید.' : 'Please fill all fields.');
+      return;
+    }
+    alert(currentLang === 'fa' ? 'پیام شما با موفقیت ارسال شد!' : 'Your message sent successfully!');
+    this.reset();
+  });
 }
 
-/* ===== هدر پویا ===== */
-.main-header {
-  position: sticky;
-  top: 0;
-  z-index: 999;
-  padding: 12px 0;
-  border-radius: 0 0 30px 30px !important;
-  margin-bottom: 20px;
-  background: var(--bg-secondary) !important;
-  transition: background 0.3s, backdrop-filter 0.3s;
-}
-.main-header.scrolled {
-  backdrop-filter: blur(30px) saturate(250%);
-  background: rgba(0, 0, 0, 0.6) !important;
-}
-[data-theme="light"] .main-header.scrolled {
-  background: rgba(255, 255, 255, 0.7) !important;
-}
-
-.navbar-brand {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  text-decoration: none;
-}
-.logo-img {
-  height: 45px;
-  width: auto;
-  border-radius: 10px;
-  transition: transform 0.3s ease;
-  filter: drop-shadow(0 0 10px rgba(201, 169, 110, 0.3));
-}
-.logo-img:hover {
-  transform: scale(1.08) rotate(-2deg);
-}
-.brand-text {
-  font-weight: 700;
-  font-size: 1.6rem;
-  color: var(--text-primary);
-  text-shadow: 0 0 30px rgba(201, 169, 110, 0.2);
-}
-
-.nav-link {
-  color: var(--text-primary) !important;
-  font-weight: 500;
-  margin: 0 12px;
-  transition: 0.3s;
-  position: relative;
-}
-.nav-link::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  width: 0;
-  height: 2px;
-  background: linear-gradient(to left, #c9a96e, #b87333);
-  transition: 0.3s;
-}
-.nav-link:hover::after {
-  width: 100%;
-}
-
-/* دکمه‌های هدر */
-.btn-lang, .btn-theme {
-  background: var(--btn-gradient);
-  color: #1a1410;
-  border: none;
-  border-radius: 50px;
-  padding: 8px 20px;
-  font-weight: 600;
-  transition: 0.3s;
-  margin-left: 8px;
-}
-.btn-theme {
-  padding: 8px 14px;
-}
-.btn-lang:hover, .btn-theme:hover {
-  transform: scale(1.05);
-  box-shadow: var(--btn-hover-shadow);
-}
-
-/* ===== Hero ===== */
-.hero {
-  min-height: 70vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  margin: 20px 20px 40px;
-  padding: 50px;
-  border-radius: 40px !important;
-  position: relative;
-  overflow: hidden;
-}
-.hero-glow {
-  position: absolute;
-  top: -30%;
-  left: -30%;
-  width: 80%;
-  height: 80%;
-  background: radial-gradient(circle, rgba(201, 169, 110, 0.15), transparent 70%);
-  animation: glowPulse 6s ease-in-out infinite alternate;
-}
-@keyframes glowPulse {
-  0% { transform: scale(1) rotate(0deg); opacity: 0.6; }
-  100% { transform: scale(1.3) rotate(10deg); opacity: 1; }
-}
-.hero-content {
-  position: relative;
-  z-index: 2;
-}
-.hero-content h1 {
-  text-shadow: 0 8px 40px rgba(0,0,0,0.6);
-  color: var(--text-primary);
-  font-size: 3.5rem;
-}
-.hero-content p {
-  font-size: 1.4rem;
-  color: var(--text-muted);
-}
-
-/* ویجت رزرو */
-.booking-widget {
-  padding: 20px 25px;
-  margin: 30px auto;
-  max-width: 700px;
-  border-radius: 30px !important;
-}
-.booking-widget label {
-  font-size: 0.85rem;
-  color: var(--text-muted);
-}
-.booking-widget .form-control {
-  background: rgba(255,255,255,0.1);
-  border: 1px solid rgba(255,255,255,0.15);
-  color: var(--text-primary);
-  border-radius: 12px;
-}
-.booking-widget .form-control:focus {
-  background: rgba(255,255,255,0.15);
-  border-color: #c9a96e;
-  box-shadow: 0 0 20px rgba(201,169,110,0.2);
-}
-.btn-book {
-  background: var(--btn-gradient);
-  color: #1a1410;
-  border: none;
-  border-radius: 50px;
-  padding: 10px 24px;
-  font-weight: 700;
-  transition: 0.3s;
-  width: 100%;
-}
-.btn-book:hover {
-  transform: scale(1.03);
-  box-shadow: var(--btn-hover-shadow);
-  color: #1a1410;
-}
-
-.btn-hero {
-  background: var(--btn-gradient);
-  color: #1a1410;
-  padding: 14px 50px;
-  border-radius: 50px;
-  font-weight: 700;
-  border: 2px solid transparent;
-  transition: 0.4s;
-  margin-top: 20px;
-}
-.btn-hero:hover {
-  background: transparent;
-  color: var(--text-primary);
-  border-color: #c9a96e;
-  transform: translateY(-4px) scale(1.02);
-  box-shadow: var(--btn-hover-shadow);
-}
-
-/* ===== عناوین ===== */
-h2 {
-  font-weight: 700;
-  color: var(--text-primary);
-  position: relative;
-  display: inline-block;
-  text-shadow: 0 4px 20px rgba(0,0,0,0.5);
-}
-h2::before {
-  content: '';
-  position: absolute;
-  bottom: -12px;
-  right: 0;
-  width: 40px;
-  height: 4px;
-  background: linear-gradient(to left, #c9a96e, #b87333);
-  border-radius: 4px;
-}
-h2::after {
-  content: '';
-  position: absolute;
-  bottom: -12px;
-  right: 48px;
-  width: 20px;
-  height: 4px;
-  background: rgba(201, 169, 110, 0.3);
-  border-radius: 4px;
-}
-
-/* ===== بخش‌ها ===== */
-.section-padding {
-  padding: 80px 0;
-  position: relative;
-  z-index: 1;
-}
-
-/* ===== گالری ===== */
-.gallery-img {
-  width: 100%;
-  height: 250px;
-  object-fit: cover;
-  border-radius: 20px;
-  cursor: pointer;
-  transition: transform 0.4s, box-shadow 0.4s;
-}
-.gallery-img:hover {
-  transform: scale(1.03);
-  box-shadow: 0 12px 40px rgba(0,0,0,0.4);
-}
-
-/* ===== لایت‌باکس ===== */
-.lightbox {
-  display: none;
-  position: fixed;
-  z-index: 9999;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0,0,0,0.9);
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-}
-.lightbox.active {
-  display: flex;
-}
-.lightbox-content {
-  max-width: 85%;
-  max-height: 80%;
-  border-radius: 20px;
-  box-shadow: 0 0 60px rgba(0,0,0,0.6);
-}
-.lightbox-caption {
-  color: #fff;
-  margin-top: 16px;
-  font-size: 1.2rem;
-  text-align: center;
-}
-.lightbox-close {
-  position: absolute;
-  top: 30px;
-  right: 40px;
-  font-size: 3rem;
-  color: #fff;
-  cursor: pointer;
-  transition: 0.3s;
-}
-.lightbox-close:hover { transform: scale(1.2); }
-.lightbox-prev, .lightbox-next {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  font-size: 3rem;
-  color: #fff;
-  cursor: pointer;
-  padding: 20px;
-  transition: 0.3s;
-  user-select: none;
-}
-.lightbox-prev { left: 20px; }
-.lightbox-next { right: 20px; }
-.lightbox-prev:hover, .lightbox-next:hover {
-  background: rgba(255,255,255,0.1);
-  border-radius: 50%;
-}
-
-/* ===== اسلایدر واحدها ===== */
-.rooms-slider-wrapper {
-  position: relative;
-}
-.rooms-slider {
-  display: flex;
-  gap: 24px;
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  scroll-behavior: smooth;
-  padding: 15px 5px 30px;
-  -webkit-overflow-scrolling: touch;
-}
-.rooms-slider::-webkit-scrollbar {
-  height: 6px;
-}
-.rooms-slider::-webkit-scrollbar-thumb {
-  background: #c9a96e;
-  border-radius: 50px;
-}
-.rooms-slider::-webkit-scrollbar-track {
-  background: transparent;
-}
-.room-card {
-  flex: 0 0 280px;
-  overflow: hidden;
-  scroll-snap-align: start;
-}
-.room-card img {
-  width: 100%;
-  height: 200px;
-  object-fit: cover;
-  border-radius: 20px 20px 0 0;
-}
-.room-info {
-  padding: 20px;
-}
-.room-info h4 {
-  color: var(--text-primary);
-  font-weight: 700;
-}
-.facilities {
-  list-style: none;
-  padding: 0;
-}
-.facilities li {
-  margin-bottom: 6px;
-  font-size: 0.9rem;
-}
-.facilities i {
-  color: #c9a96e;
-  width: 22px;
-}
-.btn-room {
-  background: var(--btn-gradient);
-  color: #1a1410;
-  border: none;
-  border-radius: 50px;
-  padding: 10px 24px;
-  font-weight: 600;
-  transition: 0.3s;
-  text-decoration: none;
-  display: inline-block;
-}
-.btn-room:hover {
-  transform: scale(1.05);
-  box-shadow: var(--btn-hover-shadow);
-  color: #1a1410;
-}
-.slider-btn {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  background: rgba(255,255,255,0.1);
-  backdrop-filter: blur(8px);
-  border: 1px solid rgba(255,255,255,0.15);
-  border-radius: 50%;
-  width: 44px;
-  height: 44px;
-  color: var(--text-primary);
-  transition: 0.3s;
-  z-index: 5;
-}
-.slider-btn:hover {
-  background: #c9a96e;
-  color: #1a1410;
-}
-.prev-btn { right: 0; }
-.next-btn { left: 0; }
-
-/* ===== جاذبه‌ها ===== */
-.attr-card {
-  text-align: center;
-  padding: 20px 10px;
-}
-.attr-card i {
-  margin-bottom: 12px;
-  filter: drop-shadow(0 0 20px rgba(201, 169, 110, 0.2));
-}
-.attr-card h5 {
-  font-weight: 700;
-  color: var(--text-primary);
-}
-.attr-card p {
-  font-size: 0.9rem;
-  color: var(--text-muted);
-}
-.btn-map {
-  background: var(--btn-gradient);
-  color: #1a1410;
-  border: none;
-  border-radius: 50px;
-  padding: 6px 16px;
-  font-weight: 600;
-  transition: 0.3s;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 0.8rem;
-}
-.btn-map:hover {
-  transform: scale(1.05);
-  color: #1a1410;
-}
-
-/* ===== نظرات پویا ===== */
-.testimonial-card {
-  padding: 25px;
-  border-right: 6px solid #c9a96e;
-  font-style: italic;
-}
-.testimonial-card span {
-  display: block;
-  margin-top: 12px;
-  font-weight: 600;
-  color: #c9a96e;
-  font-style: normal;
-}
-.testimonial-card .rating {
-  color: #ffd700;
-  margin-bottom: 8px;
-}
-.nastaliq {
-  font-family: 'Noto Nastaliq Urdu', serif;
-  font-size: 1.1rem;
-}
-
-/* ===== تماس ===== */
-.contact-info {
-  padding: 20px;
-}
-.contact-info p {
-  margin-bottom: 16px;
-}
-.contact-info i {
-  color: #c9a96e;
-  width: 30px;
-}
-.btn-submit {
-  background: var(--btn-gradient);
-  color: #1a1410;
-  padding: 12px 40px;
-  border-radius: 50px;
-  font-weight: 600;
-  border: none;
-  transition: 0.3s;
-}
-.btn-submit:hover {
-  transform: scale(1.03);
-  box-shadow: var(--btn-hover-shadow);
-}
-.btn-guide {
-  background: linear-gradient(135deg, #b87333, #8d6e63);
-  color: #fff;
-  padding: 10px 25px;
-  border-radius: 50px;
-  text-decoration: none;
-  display: inline-block;
-  margin: 5px 0;
-  transition: 0.3s;
-}
-.btn-guide:hover {
-  transform: scale(1.05);
-  color: #fff;
-}
-
-/* ===== فوتر ===== */
-.main-footer {
-  margin: 40px 20px 20px;
-  padding: 30px;
-  text-align: center;
-  border-radius: 30px !important;
-  background: var(--bg-secondary) !important;
-}
-.main-footer p {
-  margin: 0;
-  color: var(--text-muted);
-}
-
-/* ===== دکمه بازگشت به بالا ===== */
-.btn-back-top {
-  position: fixed;
-  bottom: 30px;
-  right: 30px;
-  background: var(--btn-gradient);
-  color: #1a1410;
-  border: none;
-  border-radius: 50%;
-  width: 55px;
-  height: 55px;
-  font-size: 1.4rem;
-  box-shadow: 0 8px 30px rgba(0,0,0,0.3);
-  transition: 0.4s;
-  z-index: 999;
-  opacity: 0;
-  visibility: hidden;
-  transform: translateY(20px);
-}
-.btn-back-top.visible {
-  opacity: 1;
-  visibility: visible;
-  transform: translateY(0);
-}
-.btn-back-top:hover {
-  transform: scale(1.1);
-  box-shadow: var(--btn-hover-shadow);
-}
-
-/* ===== انیمیشن فید-این ===== */
-.fade-in {
-  opacity: 0;
-  transform: translateY(40px);
-  transition: opacity 0.8s ease, transform 0.8s ease;
-}
-.fade-in.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-/* ===== پارالاکس ===== */
-.parallax {
-  transition: transform 0.1s ease-out;
-}
-
-/* ===== ریسپانسیو ===== */
-@media (max-width: 768px) {
-  .hero { min-height: 50vh; padding: 30px; margin: 10px; }
-  .hero-content h1 { font-size: 2.5rem; }
-  .room-card { flex: 0 0 220px; }
-  .brand-text { font-size: 1.2rem; }
-  .logo-img { height: 35px; }
-  .section-padding { padding: 50px 0; }
-  .navbar-nav { text-align: center; }
-  .btn-lang, .btn-theme { margin-top: 10px; }
-  .booking-widget { padding: 15px; }
-  .lightbox-prev, .lightbox-next { font-size: 2rem; padding: 10px; }
-}
-@media (max-width: 576px) {
-  .hero-content h1 { font-size: 1.8rem; }
-  .room-card { flex: 0 0 180px; }
-  .slider-btn { width: 34px; height: 34px; font-size: 0.9rem; }
-  .btn-back-top { width: 45px; height: 45px; font-size: 1rem; bottom: 20px; right: 20px; }
-}
+// ============================================================
+// 14. مقداردهی اولیه
+// ============================================================
+console.log('✅ VakilStay fully loaded with all features!');

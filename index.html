@@ -1,391 +1,608 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>VakilStay | اقامتگاه وکیل</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#22150f">
+  <meta name="description" content="VakilStay؛ اقامتگاه وکیل در قلب بافت تاریخی شیراز، همراه با راهنمای سفر، جاذبه‌ها، نقشه و برنامه‌ریز سفر.">
+  <meta name="keywords" content="اقامتگاه شیراز, اقامتگاه وکیل, بازار وکیل, سفر شیراز, تخت جمشید, حافظیه, سعدیه, باغ ارم">
+  <meta name="author" content="VakilStay">
+  <meta property="og:title" content="VakilStay | اقامتگاه وکیل در شیراز">
+  <meta property="og:description" content="یک تجربه‌ی حرفه‌ای برای اقامت و برنامه‌ریزی سفر در شیراز.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="cover.jpeg">
+  <title>VakilStay | اقامتگاه وکیل در قلب شیراز</title>
 
-  <!-- Favicon -->
-  <link rel="icon" type="image/png" href="Logo.png" />
-  <link rel="apple-touch-icon" href="Logo.png" />
+  <link rel="icon" type="image/png" href="Logo.png">
+  <link rel="apple-touch-icon" href="Logo.png">
 
-  <!-- Bootstrap 5 -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" />
-  <!-- Font Awesome 6 -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
-  <!-- فونت وزیرمتن -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
-  <!-- فونت نستعلیق -->
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu:wght@400;700&family=Vazirmatn:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 
-  <!-- Leaflet (برای نقشه تعاملی) -->
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj4R5xkS1Dg0Qj9Xf6aLZxBvO4o6xj5r0n3k8r5K5vYjK2Jw==" crossorigin="anonymous" referrerpolicy="no-referrer">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="">
 
-  <!-- استایل سفارشی -->
-  <link rel="stylesheet" href="style.css" />
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <a class="skip-link" href="#main">پرش به محتوای اصلی</a>
 
-  <!-- ===== الگوی پس‌زمینه ===== -->
-  <div class="pattern-bg"></div>
+  <div class="site-noise" aria-hidden="true"></div>
+  <div class="petal petal-one" aria-hidden="true"></div>
+  <div class="petal petal-two" aria-hidden="true"></div>
 
-  <!-- ===== هدر ===== -->
-  <header class="main-header glass" id="mainHeader">
-    <div class="container">
-      <nav class="navbar navbar-expand-lg">
-        <a class="navbar-brand" href="#">
-          <img src="Logo.png" alt="VakilStay Logo" height="45" class="logo-img" />
-          <span class="brand-text">VakilStay</span>
-        </a>
-        <button class="navbar-toggler" type="button" id="navToggle">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav ms-auto">
-            <li class="nav-item"><a class="nav-link" href="#rooms" data-trans="rooms">واحدها</a></li>
-            <li class="nav-item"><a class="nav-link" href="#attractions" data-trans="attractions">جاذبه‌ها</a></li>
-            <li class="nav-item"><a class="nav-link" href="#testimonials" data-trans="testimonials">نظرات</a></li>
-            <li class="nav-item"><a class="nav-link" href="#contact" data-trans="contact">تماس</a></li>
-          </ul>
-          <button class="btn btn-theme" id="themeToggle" title="تغییر تم">
-            <i class="fas fa-moon"></i>
+  <header class="site-header" id="siteHeader">
+    <div class="container nav-shell">
+      <a class="brand" href="#home" aria-label="VakilStay">
+        <span class="brand-mark"><img src="Logo.png" alt="" onerror="this.style.display='none'"></span>
+        <span class="brand-copy">
+          <strong>VakilStay</strong>
+          <small>خانه‌ای در بافت تاریخی شیراز</small>
+        </span>
+      </a>
+
+      <button class="icon-button mobile-menu-button" id="mobileMenuButton" aria-expanded="false" aria-controls="mainNav" aria-label="باز کردن منو">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+
+      <nav class="main-nav" id="mainNav" aria-label="ناوبری اصلی">
+        <a href="#home">خانه</a>
+        <a href="#experience">تجربه</a>
+        <a href="#rooms">واحدها</a>
+        <a href="#guide">راهنمای شیراز</a>
+        <a href="#map">نقشه</a>
+        <a href="#reviews">نظرات</a>
+        <a href="#contact">تماس</a>
+        <div class="nav-actions">
+          <button class="icon-button" id="themeButton" title="تغییر تم" aria-label="تغییر تم">
+            <i class="fa-solid fa-moon"></i>
           </button>
-          <button class="btn btn-lang" id="langToggle">
-            <i class="fas fa-globe"></i> <span id="langLabel">فارسی</span>
+          <button class="icon-button" id="shareButton" title="اشتراک‌گذاری" aria-label="اشتراک‌گذاری">
+            <i class="fa-solid fa-share-nodes"></i>
+          </button>
+          <button class="language-button" id="languageButton" type="button">
+            <i class="fa-solid fa-globe"></i>
+            <span>EN</span>
           </button>
         </div>
       </nav>
     </div>
   </header>
 
-  <!-- ===== Hero ===== -->
-  <section class="hero glass" id="home">
-    <div class="hero-glow"></div>
-    <div class="container hero-content">
-      <h1 class="display-3 fw-bold" data-fa="اقامتگاه وکیل" data-en="VakilStay Residence">اقامتگاه وکیل</h1>
-      <p class="lead" data-fa="در قلب تاریخ و فرهنگ شیراز" data-en="In the heart of Shiraz's history and culture">در قلب تاریخ و فرهنگ شیراز</p>
+  <main id="main">
+    <section class="hero-section" id="home">
+      <div class="hero-backdrop"></div>
+      <div class="hero-grid"></div>
 
-      <!-- بنر گرافیکی -->
-      <div class="hero-banner glass">
-        <div class="banner-content">
-          <i class="fas fa-iran fa-3x" style="color: #c9a96e;"></i>
-          <h3 data-fa="شیراز، شهر شعر و تاریخ" data-en="Shiraz, City of Poetry and History">شیراز، شهر شعر و تاریخ</h3>
-          <p data-fa="با اقامت در قلب بافت تاریخی، از نزدیک با تخت جمشید، حافظ، سعدی و باغ‌های افسانه‌ای آشنا شوید." data-en="Stay in the heart of the historic district and explore Persepolis, Hafez, Saadi, and legendary gardens.">
-            با اقامت در قلب بافت تاریخی، از نزدیک با تخت جمشید، حافظ، سعدی و باغ‌های افسانه‌ای آشنا شوید.
+      <div class="container hero-layout">
+        <div class="hero-copy reveal">
+          <div class="eyebrow">
+            <span class="eyebrow-dot"></span>
+            اقامت + راهنمای هوشمند سفر در شیراز
+          </div>
+          <h1>شیراز را فقط نبین؛<br><span>زندگی‌اش کن.</span></h1>
+          <p class="hero-lead">
+            اقامتگاه وکیل در قلب بافت تاریخی شیراز؛ جایی برای اینکه صبح را با بازار وکیل شروع کنید،
+            عصر را میان باغ‌ها قدم بزنید و شب را با حافظ و آرامش شهر به پایان برسانید.
           </p>
-          <div class="banner-icons">
-            <span><i class="fas fa-landmark"></i> تخت جمشید</span>
-            <span><i class="fas fa-feather-alt"></i> حافظ</span>
-            <span><i class="fas fa-book-open"></i> سعدی</span>
-            <span><i class="fas fa-tree"></i> باغ ارم</span>
+
+          <div class="hero-cta">
+            <a href="#rooms" class="primary-button">
+              <i class="fa-solid fa-bed"></i>
+              مشاهده واحدها
+            </a>
+            <a href="#guide" class="secondary-button">
+              <i class="fa-solid fa-compass"></i>
+              برنامه‌ریزی سفر
+            </a>
+          </div>
+
+          <div class="hero-trust">
+            <div class="trust-item">
+              <i class="fa-solid fa-location-dot"></i>
+              <div>
+                <strong>بافت تاریخی</strong>
+                <span>نزدیک بازار وکیل</span>
+              </div>
+            </div>
+            <div class="trust-item">
+              <i class="fa-solid fa-route"></i>
+              <div>
+                <strong>دسترسی شهری</strong>
+                <span>مکان‌یابی و نقشه</span>
+              </div>
+            </div>
+            <div class="trust-item">
+              <i class="fa-solid fa-mobile-screen-button"></i>
+              <div>
+                <strong>مناسب موبایل</strong>
+                <span>سریع و تعاملی</span>
+              </div>
+            </div>
           </div>
         </div>
+
+        <aside class="hero-dashboard reveal delay-1" aria-label="داشبورد سفر">
+          <div class="dashboard-top">
+            <div>
+              <span class="mini-label">وضعیت شیراز</span>
+              <strong id="weatherState">در حال دریافت...</strong>
+            </div>
+            <div class="weather-icon" id="weatherIcon"><i class="fa-solid fa-cloud-sun"></i></div>
+          </div>
+
+          <div class="weather-main">
+            <div class="temperature"><span id="weatherTemp">--</span><sup>°C</sup></div>
+            <div>
+              <span id="weatherDescription">آب‌وهوا</span>
+              <small id="weatherFeels">احساس دما: --</small>
+            </div>
+          </div>
+
+          <div class="dashboard-divider"></div>
+
+          <div class="dashboard-grid">
+            <div>
+              <span>تاریخ امروز</span>
+              <strong id="todayDate">--</strong>
+            </div>
+            <div>
+              <span>زمان محلی</span>
+              <strong id="localTime">--</strong>
+            </div>
+            <div>
+              <span>موقعیت</span>
+              <strong>شیراز، فارس</strong>
+            </div>
+            <div>
+              <span>بهترین فصل‌ها</span>
+              <strong>بهار · پاییز</strong>
+            </div>
+          </div>
+
+          <button class="dashboard-action" id="openTripPlanner">
+            <i class="fa-solid fa-wand-magic-sparkles"></i>
+            ساخت برنامه سفر اختصاصی
+            <i class="fa-solid fa-arrow-left"></i>
+          </button>
+        </aside>
       </div>
 
-      <a href="#rooms" class="btn btn-hero" data-fa="مشاهده واحدها" data-en="View Rooms">مشاهده واحدها</a>
-    </div>
-  </section>
+      <div class="scroll-cue" aria-hidden="true">
+        <span></span>
+        اسکرول کنید
+      </div>
+    </section>
 
-  <!-- ===== درباره ===== -->
-  <section class="about section-padding" id="about">
-    <div class="container">
-      <div class="row align-items-center">
-        <div class="col-lg-6 glass-card">
-          <h2 data-fa="درباره اقامتگاه" data-en="About VakilStay">درباره اقامتگاه</h2>
-          <p data-fa="اقامتگاه وکیل در قلب بافت تاریخی شیراز واقع شده و تنها چند دقیقه پیاده تا بازار وکیل، حمام وکیل، مسجد وکیل، ارگ کریم‌خان، سرای مشیر و ایستگاه مترو وکیل فاصله دارد. این اقامتگاه با معماری سنتی و امکانات مدرن، تجربه‌ای بی‌نظیر از اقامت در شیراز را برای شما فراهم می‌کند." data-en="VakilStay is located in the heart of Shiraz's historic district, just minutes from Vakil Bazaar, Vakil Bath, Vakil Mosque, Karim Khan Citadel, Saraye Moshir, and Vakil Metro Station. Combining traditional architecture with modern amenities, it offers an unforgettable stay in Shiraz.">
-            اقامتگاه وکیل در قلب بافت تاریخی شیراز واقع شده و تنها چند دقیقه پیاده تا بازار وکیل، حمام وکیل، مسجد وکیل، ارگ کریم‌خان، سرای مشیر و ایستگاه مترو وکیل فاصله دارد. این اقامتگاه با معماری سنتی و امکانات مدرن، تجربه‌ای بی‌نظیر از اقامت در شیراز را برای شما فراهم می‌کند.
+    <section class="stats-strip">
+      <div class="container stats-grid">
+        <div class="stat-item">
+          <strong data-counter="4">۰</strong>
+          <span>واحد اقامتی</span>
+        </div>
+        <div class="stat-item">
+          <strong data-counter="9">۰</strong>
+          <span>جاذبه منتخب</span>
+        </div>
+        <div class="stat-item">
+          <strong data-counter="3">۰</strong>
+          <span>پیشنهاد سبک سفر</span>
+        </div>
+        <div class="stat-item">
+          <strong data-counter="24">۰</strong>
+          <span>راهنمایی در هر ساعت</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-light" id="experience">
+      <div class="container">
+        <div class="section-heading centered reveal">
+          <span class="section-kicker">VakilStay Experience</span>
+          <h2>اقامت، بخشی از خودِ سفر است</h2>
+          <p>
+            به‌جای یک صفحه‌ی ساده‌ی رزرو، اینجا یک نقطه‌ی شروع برای تجربه‌ی شیراز ساخته شده:
+            اقامت، جاذبه، مسیر، آب‌وهوا، برنامه‌ی روزانه و راه‌های ارتباطی در یک تجربه‌ی یکپارچه.
           </p>
         </div>
-        <div class="col-lg-6 glass-card">
-          <img src="https://images.unsplash.com/photo-1580587771525-78b9dba3b914?w=600" alt="Shiraz" class="img-fluid rounded-4 shadow lazy" loading="lazy" />
-        </div>
-      </div>
-    </div>
-  </section>
 
-  <!-- ===== گالری ===== -->
-  <section class="gallery section-padding" id="gallery">
-    <div class="container">
-      <h2 class="text-center mb-5" data-fa="📸 گالری تصاویر" data-en="📸 Gallery">📸 گالری تصاویر</h2>
-      <div class="row g-4" id="galleryGrid">
-        <div class="col-md-4 col-sm-6">
-          <img src="https://images.unsplash.com/photo-1580587771525-78b9dba3b914?w=400" class="img-fluid rounded-3 gallery-img lazy" loading="lazy" alt="Shiraz" data-title="تخت جمشید" />
-        </div>
-        <div class="col-md-4 col-sm-6">
-          <img src="https://images.unsplash.com/photo-1566665797739-1674de7a421a?w=400" class="img-fluid rounded-3 gallery-img lazy" loading="lazy" alt="Room" data-title="واحد اقامتی" />
-        </div>
-        <div class="col-md-4 col-sm-6">
-          <img src="https://images.unsplash.com/photo-1590490360182-c33d57733427?w=400" class="img-fluid rounded-3 gallery-img lazy" loading="lazy" alt="Bazaar" data-title="بازار وکیل" />
-        </div>
-        <div class="col-md-4 col-sm-6">
-          <img src="https://images.unsplash.com/photo-1578683010236-d716f9a3f461?w=400" class="img-fluid rounded-3 gallery-img lazy" loading="lazy" alt="Citadel" data-title="ارگ کریم‌خان" />
-        </div>
-        <div class="col-md-4 col-sm-6">
-          <img src="https://images.unsplash.com/photo-1560185127-6ed189bf02f4?w=400" class="img-fluid rounded-3 gallery-img lazy" loading="lazy" alt="Garden" data-title="باغ ارم" />
-        </div>
-        <div class="col-md-4 col-sm-6">
-          <img src="https://images.unsplash.com/photo-1580587771525-78b9dba3b914?w=400" class="img-fluid rounded-3 gallery-img lazy" loading="lazy" alt="Mosque" data-title="مسجد وکیل" />
+        <div class="feature-grid">
+          <article class="feature-card reveal">
+            <div class="feature-icon"><i class="fa-solid fa-mosque"></i></div>
+            <h3>بافت تاریخی</h3>
+            <p>پایه‌ی سفر را در محدوده‌ی بازار وکیل، ارگ کریم‌خان و مجموعه‌ی وکیل قرار دهید.</p>
+            <a href="#map">دیدن روی نقشه <i class="fa-solid fa-arrow-left"></i></a>
+          </article>
+          <article class="feature-card reveal delay-1">
+            <div class="feature-icon"><i class="fa-solid fa-tree"></i></div>
+            <h3>باغ و ادبیات</h3>
+            <p>شیراز را با باغ ارم، حافظیه و سعدیه از زاویه‌ای آرام‌تر و محلی‌تر تجربه کنید.</p>
+            <a href="#guide">راهنمای جاذبه‌ها <i class="fa-solid fa-arrow-left"></i></a>
+          </article>
+          <article class="feature-card reveal delay-2">
+            <div class="feature-icon"><i class="fa-solid fa-car-side"></i></div>
+            <h3>سفرهای یک‌روزه</h3>
+            <p>برای روزهای خارج از مرکز شهر، تخت جمشید و پاسارگاد را در برنامه‌ی سفر بگذارید.</p>
+            <a href="#tripPlanner">ساخت برنامه <i class="fa-solid fa-arrow-left"></i></a>
+          </article>
+          <article class="feature-card reveal delay-3">
+            <div class="feature-icon"><i class="fa-solid fa-heart"></i></div>
+            <h3>تجربه‌ی شخصی‌تر</h3>
+            <p>با فیلترها و انتخاب سبک سفر، مسیر را مطابق زمان و حال‌وهوای خودتان بچینید.</p>
+            <a href="#rooms">انتخاب اقامت <i class="fa-solid fa-arrow-left"></i></a>
+          </article>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- ===== واحدها ===== -->
-  <section class="rooms section-padding" id="rooms">
-    <div class="container">
-      <h2 class="text-center mb-5" data-fa="🛏 واحدهای اقامتگاه" data-en="🛏 Our Rooms">🛏 واحدهای اقامتگاه</h2>
-      <div class="rooms-slider-wrapper">
-        <div class="rooms-slider" id="roomsSlider">
-          <!-- کارت‌های واحد (همانند قبل) -->
-          <div class="room-card glass-card">
-            <img src="https://images.unsplash.com/photo-1566665797739-1674de7a421a?w=400" alt="واحد ۱" />
-            <div class="room-info">
-              <h4 data-fa="واحد ۱ (۴ تخته)" data-en="Room 1 (4 beds)">واحد ۱</h4>
-              <p data-fa="یک خوابه با ظرفیت ۴ نفر، مناسب خانواده" data-en="1-bedroom, sleeps 4, perfect for families">یک خوابه با ظرفیت ۴ نفر، مناسب خانواده</p>
-              <ul class="facilities">
-                <li><i class="fas fa-bed"></i> <span data-fa="یک تخت دبل + سه تخت تکی" data-en="1 double + 3 single">یک تخت دبل + سه تخت تکی</span></li>
-                <li><i class="fas fa-utensils"></i> <span data-fa="آشپزخانه کامل" data-en="Full kitchen">آشپزخانه کامل</span></li>
-                <li><i class="fas fa-tv"></i> <span data-fa="تلویزیون، مبلمان ۷ نفره" data-en="TV, 7-seat sofa">تلویزیون، مبلمان ۷ نفره</span></li>
-              </ul>
-              <a href="https://www.jajiga.com/r/3hwx/dr" target="_blank" class="btn btn-room">رزرو در جاجیگا</a>
-            </div>
+    <section class="section section-dark rooms-section" id="rooms">
+      <div class="container">
+        <div class="section-heading split reveal">
+          <div>
+            <span class="section-kicker">Stay Your Way</span>
+            <h2>واحدی را انتخاب کنید که با سفرتان جور باشد</h2>
+            <p>فیلتر کنید، جزئیات را ببینید و برای رزرو مستقیماً به لینک همان واحد بروید.</p>
           </div>
-          <!-- کارت ۲ -->
-          <div class="room-card glass-card">
-            <img src="https://images.unsplash.com/photo-1590490360182-c33d57733427?w=400" alt="واحد ۲" />
-            <div class="room-info">
-              <h4 data-fa="واحد ۲ (۳ تخته)" data-en="Room 2 (3 beds)">واحد ۲</h4>
-              <p data-fa="آرام و نزدیک به جاذبه‌ها" data-en="Quiet, near attractions">آرام و نزدیک به جاذبه‌ها</p>
-              <ul class="facilities">
-                <li><i class="fas fa-bed"></i> <span data-fa="یک تخت دبل + دو تخت تکی" data-en="1 double + 2 single">یک تخت دبل + دو تخت تکی</span></li>
-                <li><i class="fas fa-wind"></i> <span data-fa="کولر آبی" data-en="Evaporative cooler">کولر آبی</span></li>
-                <li><i class="fas fa-balcony"></i> <span data-fa="بالکن" data-en="Balcony">بالکن</span></li>
-              </ul>
-              <a href="https://www.jajiga.com/r/3i6c/dr" target="_blank" class="btn btn-room">رزرو در جاجیگا</a>
-            </div>
-          </div>
-          <!-- کارت ۳ -->
-          <div class="room-card glass-card">
-            <img src="https://images.unsplash.com/photo-1578683010236-d716f9a3f461?w=400" alt="واحد ۳" />
-            <div class="room-info">
-              <h4 data-fa="واحد ۳ (۲ تخته)" data-en="Room 3 (2 beds)">واحد ۳</h4>
-              <p data-fa="مناسب سفرهای دوستانه" data-en="Great for friends">مناسب سفرهای دوستانه</p>
-              <ul class="facilities">
-                <li><i class="fas fa-bed"></i> <span data-fa="یک تخت دبل + یک تخت تکی" data-en="1 double + 1 single">یک تخت دبل + یک تخت تکی</span></li>
-                <li><i class="fas fa-snowflake"></i> <span data-fa="اسپیلت" data-en="Split AC">اسپیلت</span></li>
-                <li><i class="fas fa-mug-hot"></i> <span data-fa="کتری برقی" data-en="Electric kettle">کتری برقی</span></li>
-              </ul>
-              <a href="https://www.jajiga.com/r/3hqd/dr" target="_blank" class="btn btn-room">رزرو در جاجیگا</a>
-            </div>
-          </div>
-          <!-- کارت ۴ -->
-          <div class="room-card glass-card">
-            <img src="https://images.unsplash.com/photo-1560185127-6ed189bf02f4?w=400" alt="واحد ۴" />
-            <div class="room-info">
-              <h4 data-fa="واحد ۴ (دبل)" data-en="Room 4 (Double)">واحد ۴</h4>
-              <p data-fa="نزدیک بازار وکیل" data-en="Near Vakil Bazaar">نزدیک بازار وکیل</p>
-              <ul class="facilities">
-                <li><i class="fas fa-bed"></i> <span data-fa="یک تخت دبل" data-en="1 double bed">یک تخت دبل</span></li>
-                <li><i class="fas fa-snowflake"></i> <span data-fa="اسپیلت" data-en="Split AC">اسپیلت</span></li>
-                <li><i class="fas fa-utensils"></i> <span data-fa="یخچال، کابینت" data-en="Fridge, cabinet">یخچال، کابینت</span></li>
-              </ul>
-              <a href="https://www.jajiga.com/r/3hwz/dr" target="_blank" class="btn btn-room">رزرو در جاجیگا</a>
-            </div>
+          <div class="room-filters" role="group" aria-label="فیلتر واحدها">
+            <button class="filter-chip active" data-room-filter="all">همه</button>
+            <button class="filter-chip" data-room-filter="4">۴ نفر</button>
+            <button class="filter-chip" data-room-filter="3">۳ نفر</button>
+            <button class="filter-chip" data-room-filter="2">۲ نفر</button>
           </div>
         </div>
-        <button class="slider-btn prev-btn" id="prevBtn"><i class="fas fa-chevron-right"></i></button>
-        <button class="slider-btn next-btn" id="nextBtn"><i class="fas fa-chevron-left"></i></button>
-      </div>
-    </div>
-  </section>
 
-  <!-- ===== جاذبه‌ها (دوحالته با کلاس‌های Bootstrap) ===== -->
-  <section class="attractions section-padding" id="attractions">
-    <div class="container">
-      <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap">
-        <h2 data-fa="🏛 گنجینه‌های شیراز" data-en="🏛 Shiraz Treasures">🏛 گنجینه‌های شیراز</h2>
-        <div class="attraction-tabs">
-          <button class="btn btn-sm btn-map active" id="listViewBtn" data-fa="لیست" data-en="List">لیست</button>
-          <button class="btn btn-sm btn-map" id="mapViewBtn" data-fa="نقشه تعاملی" data-en="Interactive Map">نقشه تعاملی</button>
+        <div class="rooms-grid" id="roomsGrid"></div>
+        <div class="empty-state hidden" id="roomsEmpty">
+          واحدی مطابق فیلتر انتخابی پیدا نشد.
         </div>
+      </div>
+    </section>
+
+    <section class="section planner-section" id="tripPlanner">
+      <div class="container planner-layout">
+        <div class="planner-intro reveal">
+          <span class="section-kicker">Smart Shiraz Planner</span>
+          <h2>برنامه‌ی سفر را در چند کلیک بسازید</h2>
+          <p>
+            تعداد روز، حال‌وهوای سفر و شدت پیاده‌روی را انتخاب کنید؛ سایت یک پیشنهاد اولیه برای
+            صبح، عصر و شب می‌سازد. این برنامه جایگزین راهنمای محلی یا ساعات بازدید نیست و برای شروع طراحی سفر است.
+          </p>
+
+          <div class="planner-tips">
+            <div><i class="fa-solid fa-cloud-sun"></i><span>بهار و پاییز برای گشت‌وگذار فضای باز معمولاً مناسب‌ترند. citeturn269248search0turn269248search3</span></div>
+            <div><i class="fa-solid fa-landmark"></i><span>تخت جمشید و پاسارگاد را به‌عنوان سفرهای خارج شهر جداگانه ببینید. citeturn269248search4turn840204search3</span></div>
+          </div>
+        </div>
+
+        <div class="planner-card reveal delay-1">
+          <div class="planner-control">
+            <label for="tripDays">مدت اقامت</label>
+            <select id="tripDays">
+              <option value="1">۱ روز</option>
+              <option value="2" selected>۲ روز</option>
+              <option value="3">۳ روز</option>
+              <option value="4">۴ روز</option>
+            </select>
+          </div>
+          <div class="planner-control">
+            <label for="tripStyle">سبک سفر</label>
+            <select id="tripStyle">
+              <option value="history" selected>تاریخ و معماری</option>
+              <option value="poetry">شعر، باغ و آرامش</option>
+              <option value="food">بازار و حال‌وهوای محلی</option>
+            </select>
+          </div>
+          <div class="planner-control">
+            <label for="tripPace">ریتم سفر</label>
+            <select id="tripPace">
+              <option value="slow">آرام</option>
+              <option value="balanced" selected>متعادل</option>
+              <option value="full">پُرگردش</option>
+            </select>
+          </div>
+          <button class="primary-button full-button" id="generatePlan">
+            <i class="fa-solid fa-sparkles"></i>
+            ساخت برنامه
+          </button>
+          <div class="plan-result" id="planResult" aria-live="polite">
+            <div class="plan-placeholder">
+              <i class="fa-solid fa-map-signs"></i>
+              <span>تنظیمات را انتخاب کنید و «ساخت برنامه» را بزنید.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-light" id="guide">
+      <div class="container">
+        <div class="section-heading split reveal">
+          <div>
+            <span class="section-kicker">Explore Shiraz</span>
+            <h2>شیراز، انتخاب‌های زیادی برای یک سفر خوب دارد</h2>
+            <p>کارت‌ها بر اساس فاصله‌ی تقریبی از اقامتگاه مرتب شده‌اند؛ برای مسیر دقیق از نقشه استفاده کنید.</p>
+          </div>
+          <div class="view-switch" role="tablist" aria-label="حالت نمایش جاذبه‌ها">
+            <button class="view-tab active" data-view="cards">کارت‌ها</button>
+            <button class="view-tab" data-view="map">نقشه</button>
+          </div>
+        </div>
+
+        <div class="attraction-toolbar reveal">
+          <div class="search-field">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input id="attractionSearch" type="search" placeholder="مثلاً حافظیه، باغ، بازار..." autocomplete="off">
+          </div>
+          <div class="category-pills" id="categoryPills">
+            <button class="filter-chip active" data-category="all">همه</button>
+            <button class="filter-chip" data-category="history">تاریخی</button>
+            <button class="filter-chip" data-category="poetry">ادبی</button>
+            <button class="filter-chip" data-category="garden">باغ</button>
+            <button class="filter-chip" data-category="outside">خارج شهر</button>
+          </div>
+        </div>
+
+        <div class="attractions-layout">
+          <div class="attractions-grid" id="attractionsGrid"></div>
+          <div class="attractions-map-panel hidden" id="attractionsMapPanel">
+            <div class="map-toolbar">
+              <button class="small-button" id="fitAllMarkers"><i class="fa-solid fa-expand"></i> نمایش همه</button>
+              <button class="small-button" id="locateMe"><i class="fa-solid fa-location-crosshairs"></i> موقعیت من</button>
+            </div>
+            <div id="map"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-dark essentials-section">
+      <div class="container">
+        <div class="section-heading centered reveal">
+          <span class="section-kicker">Useful Around You</span>
+          <h2>چیزهایی که در سفر واقعاً لازم می‌شوند</h2>
+          <p>لینک‌های سریع برای مسیریابی، حمل‌ونقل، ارتباط و راهنمای سفر.</p>
+        </div>
+        <div class="essentials-grid">
+          <a class="essential-card reveal" href="https://www.google.com/maps/search/?api=1&query=Vakil%20Bazaar%2C%20Shiraz" target="_blank" rel="noopener">
+            <span class="essential-icon"><i class="fa-solid fa-shop"></i></span>
+            <div><strong>بازار وکیل</strong><span>خرید، قدم‌زدن و بافت تاریخی</span></div>
+            <i class="fa-solid fa-arrow-left"></i>
+          </a>
+          <a class="essential-card reveal delay-1" href="https://www.google.com/maps/search/?api=1&query=Vakil%20Al-Roaya%20Metro%20Station%2C%20Shiraz" target="_blank" rel="noopener">
+            <span class="essential-icon"><i class="fa-solid fa-train-subway"></i></span>
+            <div><strong>مترو وکیل‌الرعایا</strong><span>دسترسی به حمل‌ونقل شهری</span></div>
+            <i class="fa-solid fa-arrow-left"></i>
+          </a>
+          <a class="essential-card reveal delay-2" href="https://www.google.com/maps/search/?api=1&query=Shiraz%20International%20Airport" target="_blank" rel="noopener">
+            <span class="essential-icon"><i class="fa-solid fa-plane-departure"></i></span>
+            <div><strong>فرودگاه شیراز</strong><span>برای رسیدن یا ترک شهر</span></div>
+            <i class="fa-solid fa-arrow-left"></i>
+          </a>
+          <a class="essential-card reveal delay-3" href="https://www.google.com/maps/search/?api=1&query=Hospitals%20near%20Vakil%20Bazaar%20Shiraz" target="_blank" rel="noopener">
+            <span class="essential-icon"><i class="fa-solid fa-kit-medical"></i></span>
+            <div><strong>خدمات درمانی نزدیک</strong><span>مسیریابی سریع در صورت نیاز</span></div>
+            <i class="fa-solid fa-arrow-left"></i>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section booking-section">
+      <div class="container booking-layout">
+        <div class="booking-copy reveal">
+          <span class="section-kicker">Trip Calculator</span>
+          <h2>قبل از رزرو، زمان سفر را دقیق‌تر ببینید</h2>
+          <p>این ابزار قیمت‌گذاری نمی‌کند؛ فقط تعداد شب‌ها و اطلاعات پایه‌ی سفر را برای کمک به تصمیم‌گیری حساب می‌کند.</p>
+          <div class="booking-note">
+            <i class="fa-solid fa-circle-info"></i>
+            <span>قیمت و موجودی نهایی را در صفحه‌ی رزرو همان واحد بررسی کنید.</span>
+          </div>
+        </div>
+
+        <div class="booking-card reveal delay-1">
+          <div class="date-grid">
+            <label>ورود
+              <input type="date" id="checkIn">
+            </label>
+            <label>خروج
+              <input type="date" id="checkOut">
+            </label>
+          </div>
+          <label class="guest-field">تعداد مهمان
+            <div class="guest-stepper">
+              <button type="button" data-step="down" aria-label="کم کردن"><i class="fa-solid fa-minus"></i></button>
+              <strong id="guestCount">۲</strong>
+              <button type="button" data-step="up" aria-label="زیاد کردن"><i class="fa-solid fa-plus"></i></button>
+            </div>
+          </label>
+          <div class="booking-summary">
+            <div><span>تعداد شب</span><strong id="nightCount">--</strong></div>
+            <div><span>وضعیت برنامه</span><strong id="bookingStatus">تاریخ را انتخاب کنید</strong></div>
+          </div>
+          <a class="primary-button full-button" href="#rooms">
+            <i class="fa-solid fa-bed"></i>
+            انتخاب واحد
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-light reviews-section" id="reviews">
+      <div class="container reviews-layout">
+        <div class="reviews-summary reveal">
+          <span class="section-kicker">Guest Voices</span>
+          <h2>تجربه‌ی مهمان‌ها، بخش مهمی از اعتماد است</h2>
+          <p>نظرهای ثبت‌شده در این نسخه روی همین مرورگر ذخیره می‌شوند؛ برای سیستم نظرات عمومی، نیاز به بک‌اند یا سرویس فرم دارید.</p>
+          <div class="rating-big">
+            <strong id="averageRating">۴.۷</strong>
+            <div>
+              <div class="stars">★★★★★</div>
+              <span id="reviewCount">۳ تجربه</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="reviews-list" id="reviewsList"></div>
       </div>
 
-      <!-- حالت لیست -->
-      <div id="attractionsList" class="row g-4">
-        <div class="col-md-3 col-sm-6">
-          <div class="attr-card glass-card">
-            <i class="fas fa-landmark fa-3x" style="color: #d4a373;"></i>
-            <h5 data-fa="تخت جمشید" data-en="Persepolis">تخت جمشید</h5>
-            <p data-fa="فاصله: ۶۰ کیلومتر" data-en="Distance: 60 km">فاصله: ۶۰ کیلومتر</p>
-            <a href="https://www.google.com/maps?q=29.9352,52.8896" target="_blank" class="btn btn-sm btn-map">📍 مسیریابی</a>
+      <div class="container review-form-shell reveal">
+        <div class="review-form-heading">
+          <div>
+            <span class="section-kicker">Leave a note</span>
+            <h3>نظر خودتان را ثبت کنید</h3>
           </div>
+          <i class="fa-solid fa-pen-nib"></i>
         </div>
-        <div class="col-md-3 col-sm-6">
-          <div class="attr-card glass-card">
-            <i class="fas fa-monument fa-3x" style="color: #b87333;"></i>
-            <h5 data-fa="پاسارگاد" data-en="Pasargadae">پاسارگاد</h5>
-            <p data-fa="فاصله: ۱۳۰ کیلومتر" data-en="Distance: 130 km">فاصله: ۱۳۰ کیلومتر</p>
-            <a href="https://www.google.com/maps?q=30.1939,53.1672" target="_blank" class="btn btn-sm btn-map">📍 مسیریابی</a>
-          </div>
-        </div>
-        <div class="col-md-3 col-sm-6">
-          <div class="attr-card glass-card">
-            <i class="fas fa-feather-alt fa-3x" style="color: #5d4037;"></i>
-            <h5 data-fa="حافظیه" data-en="Hafezieh">حافظیه</h5>
-            <p data-fa="فاصله: ۳ کیلومتر" data-en="Distance: 3 km">فاصله: ۳ کیلومتر</p>
-            <a href="https://www.google.com/maps?q=29.6253,52.5579" target="_blank" class="btn btn-sm btn-map">📍 مسیریابی</a>
-          </div>
-        </div>
-        <div class="col-md-3 col-sm-6">
-          <div class="attr-card glass-card">
-            <i class="fas fa-book-open fa-3x" style="color: #6d4c41;"></i>
-            <h5 data-fa="سعدیه" data-en="Saadieh">سعدیه</h5>
-            <p data-fa="فاصله: ۴ کیلومتر" data-en="Distance: 4 km">فاصله: ۴ کیلومتر</p>
-            <a href="https://www.google.com/maps?q=29.6219,52.5819" target="_blank" class="btn btn-sm btn-map">📍 مسیریابی</a>
-          </div>
-        </div>
-        <div class="col-md-3 col-sm-6">
-          <div class="attr-card glass-card">
-            <i class="fas fa-tree fa-3x" style="color: #2e7d32;"></i>
-            <h5 data-fa="باغ ارم" data-en="Eram Garden">باغ ارم</h5>
-            <p data-fa="فاصله: ۵ کیلومتر" data-en="Distance: 5 km">فاصله: ۵ کیلومتر</p>
-            <a href="https://www.google.com/maps?q=29.6368,52.5256" target="_blank" class="btn btn-sm btn-map">📍 مسیریابی</a>
-          </div>
-        </div>
-        <div class="col-md-3 col-sm-6">
-          <div class="attr-card glass-card">
-            <i class="fas fa-leaf fa-3x" style="color: #388e3c;"></i>
-            <h5 data-fa="باغ عفیف‌آباد" data-en="Afifabad Garden">باغ عفیف‌آباد</h5>
-            <p data-fa="فاصله: ۷ کیلومتر" data-en="Distance: 7 km">فاصله: ۷ کیلومتر</p>
-            <a href="https://www.google.com/maps?q=29.6236,52.4993" target="_blank" class="btn btn-sm btn-map">📍 مسیریابی</a>
-          </div>
-        </div>
-        <div class="col-md-3 col-sm-6">
-          <div class="attr-card glass-card">
-            <i class="fas fa-shopping-bag fa-3x" style="color: #b8860b;"></i>
-            <h5 data-fa="بازار وکیل" data-en="Vakil Bazaar">بازار وکیل</h5>
-            <p data-fa="فاصله: ۲۰۰ متر" data-en="Distance: 200 m">فاصله: ۲۰۰ متر</p>
-            <a href="https://www.google.com/maps?q=29.615,52.5468" target="_blank" class="btn btn-sm btn-map">📍 مسیریابی</a>
-          </div>
-        </div>
-        <div class="col-md-3 col-sm-6">
-          <div class="attr-card glass-card">
-            <i class="fas fa-fort-awesome fa-3x" style="color: #8d6e63;"></i>
-            <h5 data-fa="ارگ کریم‌خان" data-en="Karim Khan Citadel">ارگ کریم‌خان</h5>
-            <p data-fa="فاصله: ۵۰۰ متر" data-en="Distance: 500 m">فاصله: ۵۰۰ متر</p>
-            <a href="https://www.google.com/maps?q=29.6176,52.5447" target="_blank" class="btn btn-sm btn-map">📍 مسیریابی</a>
-          </div>
-        </div>
-        <div class="col-md-3 col-sm-6">
-          <div class="attr-card glass-card">
-            <i class="fas fa-mosque fa-3x" style="color: #4e342e;"></i>
-            <h5 data-fa="مسجد وکیل" data-en="Vakil Mosque">مسجد وکیل</h5>
-            <p data-fa="فاصله: ۳۰۰ متر" data-en="Distance: 300 m">فاصله: ۳۰۰ متر</p>
-            <a href="https://www.google.com/maps?q=29.6144,52.5454" target="_blank" class="btn btn-sm btn-map">📍 مسیریابی</a>
-          </div>
-        </div>
-      </div>
-
-      <!-- حالت نقشه تعاملی -->
-      <div id="attractionsMap" class="glass-card p-3 d-none">
-        <div id="mapContainer" style="height:450px; border-radius:20px; overflow:hidden;"></div>
-        <div class="mt-3 text-center small text-muted" data-fa="نشانگرهای قرمز: جاذبه‌های گردشگری | نشانگر آبی: اقامتگاه" data-en="Red: Attractions | Blue: Residence">
-          نشانگرهای قرمز: جاذبه‌های گردشگری | نشانگر آبی: اقامتگاه
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ===== نظرات پویا ===== -->
-  <section class="testimonials section-padding" id="testimonials">
-    <div class="container">
-      <h2 class="text-center mb-5" data-fa="💬 نظرات مهمانان" data-en="💬 Guest Testimonials">💬 نظرات مهمانان</h2>
-      <div id="dynamicTestimonials" class="row g-4">
-        <!-- نظرات از localStorage بارگذاری می‌شوند -->
-      </div>
-      <div class="mt-5 glass-card p-4">
-        <h5 class="mb-3" data-fa="نظر خود را بنویسید" data-en="Write your review">نظر خود را بنویسید</h5>
-        <form id="reviewForm">
-          <div class="row g-3">
-            <div class="col-md-6">
-              <input type="text" class="form-control" id="reviewName" placeholder="نام شما" required />
-            </div>
-            <div class="col-md-6">
-              <input type="number" class="form-control" id="reviewRating" placeholder="امتیاز (۱ تا ۵)" min="1" max="5" required />
-            </div>
-            <div class="col-12">
-              <textarea class="form-control" id="reviewText" rows="3" placeholder="متن نظر" required></textarea>
-            </div>
-            <div class="col-12">
-              <button type="submit" class="btn btn-submit" data-fa="ارسال نظر" data-en="Submit Review">ارسال نظر</button>
-            </div>
-          </div>
+        <form id="reviewForm" class="review-form">
+          <input id="reviewName" type="text" maxlength="40" placeholder="نام شما" required>
+          <select id="reviewRating" required>
+            <option value="">امتیاز</option>
+            <option value="5">۵ از ۵</option>
+            <option value="4">۴ از ۵</option>
+            <option value="3">۳ از ۵</option>
+            <option value="2">۲ از ۵</option>
+            <option value="1">۱ از ۵</option>
+          </select>
+          <textarea id="reviewText" rows="3" maxlength="300" placeholder="تجربه‌ی شما..." required></textarea>
+          <button class="primary-button" type="submit"><i class="fa-solid fa-paper-plane"></i> ثبت نظر</button>
         </form>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- ===== تماس ===== -->
-  <section class="contact section-padding" id="contact">
-    <div class="container">
-      <h2 class="text-center mb-5" data-fa="📞 تماس با ما" data-en="📞 Contact Us">📞 تماس با ما</h2>
-      <div class="row">
-        <div class="col-lg-6 glass-card">
-          <form id="contactForm">
-            <div class="mb-3">
-              <label class="form-label" data-fa="نام کامل" data-en="Full Name">نام کامل</label>
-              <input type="text" class="form-control" required />
-            </div>
-            <div class="mb-3">
-              <label class="form-label" data-fa="ایمیل" data-en="Email">ایمیل</label>
-              <input type="email" class="form-control" required />
-            </div>
-            <div class="mb-3">
-              <label class="form-label" data-fa="پیام" data-en="Message">پیام</label>
-              <textarea class="form-control" rows="4" required></textarea>
-            </div>
-            <button type="submit" class="btn btn-submit" data-fa="ارسال" data-en="Send">ارسال</button>
-          </form>
+    <section class="section contact-section" id="contact">
+      <div class="container contact-layout">
+        <div class="contact-copy reveal">
+          <span class="section-kicker">Talk to VakilStay</span>
+          <h2>برای هماهنگی، مستقیم با ما در ارتباط باشید</h2>
+          <p>اطلاعات تماس فعلی پروژه از ریپازیتوری موجود گرفته شده است. لینک‌های زیر برای استفاده‌ی سریع در موبایل آماده شده‌اند.</p>
+
+          <div class="contact-actions">
+            <a class="contact-action primary" href="tel:+989059123832">
+              <i class="fa-solid fa-phone"></i>
+              <span><small>تماس مستقیم</small><strong>۰۹۰۵۹۱۲۳۸۳۲</strong></span>
+            </a>
+            <a class="contact-action" href="https://wa.me/989059123832" target="_blank" rel="noopener">
+              <i class="fa-brands fa-whatsapp"></i>
+              <span><small>WhatsApp</small><strong>ارسال پیام</strong></span>
+            </a>
+            <a class="contact-action" href="https://maps.app.goo.gl/aM4ZekBX2bC79dep7" target="_blank" rel="noopener">
+              <i class="fa-solid fa-location-dot"></i>
+              <span><small>موقعیت</small><strong>باز کردن در نقشه</strong></span>
+            </a>
+            <a class="contact-action" href="guide.pdf" target="_blank" rel="noopener">
+              <i class="fa-solid fa-file-pdf"></i>
+              <span><small>راهنما</small><strong>دانلود PDF</strong></span>
+            </a>
+          </div>
         </div>
-        <div class="col-lg-6 contact-info glass-card">
-          <p><i class="fas fa-phone"></i> <span data-fa="تلفن: ۰۹۰۵۹۱۲۳۸۳۲" data-en="Phone: +98 905 912 3832">تلفن: ۰۹۰۵۹۱۲۳۸۳۲</span></p>
-          <p><i class="fas fa-map-marker-alt"></i> <span data-fa="شیراز، خیابان وکیل، بازار وکیل" data-en="Shiraz, Vakil St., Vakil Bazaar">شیراز، خیابان وکیل، بازار وکیل</span></p>
-          <p><i class="fas fa-envelope"></i> info@vakilstay.com</p>
-          <a href="https://maps.app.goo.gl/aM4ZekBX2bC79dep7" target="_blank" class="btn btn-map">📍 Google Maps</a>
-          <br />
-          <a href="guide.pdf" target="_blank" class="btn btn-guide mt-2" data-fa="📖 دانلود راهنمای گردشگری" data-en="📖 Download Tourist Guide">📖 دانلود راهنمای گردشگری</a>
-        </div>
+
+        <form class="contact-card reveal delay-1" id="contactForm">
+          <div class="contact-card-head">
+            <span class="section-kicker">Quick Message</span>
+            <h3>پیام بگذارید</h3>
+          </div>
+          <label>نام
+            <input type="text" id="contactName" required>
+          </label>
+          <label>ایمیل
+            <input type="email" id="contactEmail" required>
+          </label>
+          <label>پیام
+            <textarea id="contactMessage" rows="5" required></textarea>
+          </label>
+          <button class="primary-button" type="submit"><i class="fa-solid fa-paper-plane"></i> آماده‌سازی ایمیل</button>
+          <small class="form-footnote">ارسال نهایی از طریق برنامه‌ی ایمیل دستگاه شما انجام می‌شود.</small>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <div>
+        <a class="brand footer-brand" href="#home">
+          <span class="brand-mark"><img src="Logo.png" alt=""></span>
+          <span class="brand-copy">
+            <strong>VakilStay</strong>
+            <small>Shiraz · Iran</small>
+          </span>
+        </a>
+        <p>اقامتگاهی برای ساختن یک سفر بهتر به شیراز؛ با احترام به تاریخ، باغ، شعر و مهمان‌نوازی شهر.</p>
+      </div>
+
+      <div class="footer-links">
+        <strong>دسترسی سریع</strong>
+        <a href="#rooms">واحدها</a>
+        <a href="#guide">جاذبه‌ها</a>
+        <a href="#tripPlanner">برنامه سفر</a>
+        <a href="#contact">تماس</a>
+      </div>
+
+      <div class="footer-links">
+        <strong>ابزارها</strong>
+        <button id="footerTheme">تغییر تم</button>
+        <button id="footerShare">اشتراک‌گذاری</button>
+        <button id="installApp" class="hidden">نصب روی دستگاه</button>
       </div>
     </div>
-  </section>
 
-  <!-- ===== فوتر ===== -->
-  <footer class="main-footer glass">
-    <div class="container">
-      <p data-fa="سپاس از انتخاب اقامتگاه وکیل 🌿" data-en="Thank you for choosing VakilStay 🌿">سپاس از انتخاب اقامتگاه وکیل 🌿</p>
-      <p class="small" data-fa="طراحی شده با عشق به شیراز و تخت جمشید" data-en="Designed with love for Shiraz and Persepolis">طراحی شده با عشق به شیراز و تخت جمشید</p>
+    <div class="container footer-bottom">
+      <span>© <span id="footerYear"></span> VakilStay</span>
+      <span>ساخته‌شده با عشق به شیراز 🌿</span>
     </div>
   </footer>
 
-  <!-- ===== دکمه بازگشت به بالا ===== -->
-  <button id="backToTop" class="btn-back-top">
-    <i class="fas fa-chevron-up"></i>
+  <button class="floating-action back-top" id="backTop" aria-label="بازگشت به بالا">
+    <i class="fa-solid fa-arrow-up"></i>
   </button>
 
-  <!-- ===== لایت‌باکس ===== -->
-  <div id="lightbox" class="lightbox">
-    <span class="lightbox-close">&times;</span>
-    <span class="lightbox-prev">&#10094;</span>
-    <span class="lightbox-next">&#10095;</span>
-    <img class="lightbox-content" id="lightboxImg" />
-    <div class="lightbox-caption" id="lightboxCaption"></div>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <div class="modal-backdrop hidden" id="plannerModal" aria-hidden="true">
+    <div class="modal-card modal-wide" role="dialog" aria-modal="true" aria-labelledby="plannerModalTitle">
+      <button class="modal-close" data-close-modal="plannerModal" aria-label="بستن"><i class="fa-solid fa-xmark"></i></button>
+      <div class="modal-card-head">
+        <span class="section-kicker">Your Shiraz Plan</span>
+        <h2 id="plannerModalTitle">برنامه‌ریزی سفر</h2>
+      </div>
+      <div class="modal-placeholder" id="modalPlanHost"></div>
+    </div>
   </div>
 
-  <!-- ===== اسکریپت‌ها ===== -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <div class="modal-backdrop hidden" id="lightboxModal" aria-hidden="true">
+    <div class="modal-card lightbox-card" role="dialog" aria-modal="true">
+      <button class="modal-close" data-close-modal="lightboxModal" aria-label="بستن"><i class="fa-solid fa-xmark"></i></button>
+      <img id="lightboxImage" src="" alt="">
+      <div class="lightbox-caption">
+        <strong id="lightboxTitle"></strong>
+        <span id="lightboxDescription"></span>
+      </div>
+      <div class="lightbox-controls">
+        <button class="small-button" id="lightboxPrev"><i class="fa-solid fa-chevron-right"></i></button>
+        <button class="small-button" id="lightboxNext"><i class="fa-solid fa-chevron-left"></i></button>
+      </div>
+    </div>
+  </div>
+
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"LodgingBusiness",
+    "name":"VakilStay",
+    "description":"اقامتگاه وکیل در بافت تاریخی شیراز",
+    "telephone":"+989059123832",
+    "address":{
+      "@type":"PostalAddress",
+      "addressLocality":"Shiraz",
+      "addressCountry":"IR"
+    },
+    "image":"cover.jpeg"
+  }
+  </script>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
   <script src="script.js"></script>
 </body>
 </html>
